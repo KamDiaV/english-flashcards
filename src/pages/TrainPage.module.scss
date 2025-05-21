@@ -1,0 +1,13 @@
+@use '../styles/variables.scss' as *;
+
+.trainPage {
+  padding: 24px;
+  background-color: $color-white;
+}
+
+.title {
+  font-size: 24px;
+  color: $color-dark;
+  margin-top: 16px;
+  font-family: $font-main;
+}

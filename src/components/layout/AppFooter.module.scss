@@ -1,0 +1,13 @@
+@use '../../styles/variables.scss' as *;
+
+.footer {
+  background-color: $color-accent;
+  padding: 12px 0;
+  text-align: center;
+}
+
+.text {
+  color: $color-white;
+  font-size: 14px;
+  font-family: $font-main;
+}

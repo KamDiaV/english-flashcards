@@ -1,0 +1,13 @@
+@use '../styles/variables.scss' as *;
+
+.homePage {
+  padding: 24px;
+  background-color: $color-white;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: $color-dark;
+  font-family: $font-main;
+}

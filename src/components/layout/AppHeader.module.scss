@@ -1,0 +1,27 @@
+@use '../../styles/variables.scss' as *;
+
+.header {
+  background-color: $color-accent;
+  padding: 16px 24px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  color: $color-white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color $transition;
+
+  &:hover {
+    color: $color-yellow;
+  }
+}
+
+.activeLink {
+  @extend .link;
+  color: $color-yellow;
+}

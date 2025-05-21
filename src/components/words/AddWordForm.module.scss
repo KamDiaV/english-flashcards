@@ -1,0 +1,58 @@
+@use '../../styles/variables.scss' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  font-family: $font-main;
+  color: $color-dark;
+
+  .input {
+    margin-top: 4px;
+    padding: 8px 12px;
+    border: 1px solid $color-lavender;
+    border-radius: $radius;
+    font-size: $font-size-base;
+    transition: border $transition;
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent;
+      box-shadow: 0 0 0 2px rgba($color-accent, 0.2);
+    }
+  }
+}
+
+.button {
+  padding: 10px;
+  background-color: $color-yellow;
+  border: none;
+  border-radius: $radius;
+  font-family: $font-main;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color $transition, transform $transition;
+
+  &:hover {
+    background-color: $color-accent;
+    color: $color-white;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.success {
+  color: $color-success;
+  font-weight: bold;
+}
+
+.error {
+  color: $color-danger;
+  font-weight: bold;
+}

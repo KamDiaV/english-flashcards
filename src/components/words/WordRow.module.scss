@@ -1,0 +1,44 @@
+@use '../../styles/variables.scss' as *;
+
+.row:nth-child(even) {
+  background-color: $color-light;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 4px 8px;              
+  border: 1px solid $color-lavender;
+  border-radius: $radius;
+  font-family: $font-main;
+  font-size: $font-size-base;
+  transition: border $transition;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 2px rgba($color-accent, 0.2);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: $radius;
+  background-color: $color-yellow;
+  color: $color-dark;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color $transition, transform $transition;
+
+  &:hover {
+    background-color: $color-accent;
+    color: $color-white;
+  }
+}

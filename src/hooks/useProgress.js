@@ -37,3 +37,12 @@ export function useProgress(wordId) {
 
   return [state, saveProgress, resetProgress]
 }
+
+/**
+ * Глобальная функция для сброса прогресса вне компонента
+ */
+export function resetProgress(wordId) {
+  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
+  delete all[wordId]
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all))
+}

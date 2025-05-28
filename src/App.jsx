@@ -15,8 +15,8 @@ function App() {
   return (
     <AppLayout>
       <Routes>
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<AboutPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/train" element={<TrainPage />} />
         <Route path="/add" element={<AddWordPage />} />
         <Route path="/vocab"  element={<VocabPage />} />

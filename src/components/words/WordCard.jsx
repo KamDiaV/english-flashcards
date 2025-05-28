@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useQueryClient }            from '@tanstack/react-query'
-import { useProgress }               from '../../hooks/useProgress'
+import { useProgress } from '../../hooks/useProgress'
 import styles                        from './WordCard.module.scss'
 
 export default function WordCard({ wordId, english, transcription, russian }) {

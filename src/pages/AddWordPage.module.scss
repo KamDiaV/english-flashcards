@@ -6,10 +6,11 @@
 }
 
 .title {
-  font-size: 24px;
-  color: $color-dark;
-  margin-top: 16px;
+  text-align: center;
   font-family: $font-main;
+  font-size: 28px;
+  color: $color-dark;
+  margin: 32px 0;
 }
 
 .formWrapper {

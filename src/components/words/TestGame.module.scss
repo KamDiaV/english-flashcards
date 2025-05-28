@@ -1,0 +1,191 @@
+@use '../../styles/variables.scss' as *;
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}
+
+.toggle {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 48px;
+
+  button {
+    padding: 8px 16px;
+    background: $color-light;
+    border: none;
+    border-radius: $radius;
+    cursor: pointer;
+    font-family: $font-main;
+    font-weight: 600;
+    transition: background $transition;
+
+    &.active {
+      background: $color-accent;
+      color: $color-white;
+    }
+
+    &:hover:not(.active) {
+      background: lighten($color-accent, 30%);
+    }
+  }
+}
+
+.prompt {
+  font-family: $font-main;
+  font-weight: 700;
+  font-size: 24px;
+  color: $color-dark;
+}
+
+.status {
+  font-family: $font-main;
+  font-size: $font-size-base;
+  color: $color-dark;
+  text-align: center;
+  padding: 24px;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+
+  progress {
+    flex: 1;
+    height: 8px;
+    border: none;
+    appearance: none;
+    background-color: $color-light;
+    &::-webkit-progress-bar {
+      background-color: $color-light;
+      border-radius: $radius;
+    }
+    &::-webkit-progress-value {
+      background-color: $color-accent;
+      border-radius: $radius;
+    }
+    &::-moz-progress-bar {
+      background-color: $color-accent;
+      border-radius: $radius;
+    }
+  }
+
+  span {
+    margin-left: 8px;
+    font-size: 14px;
+    color: $color-dark;
+    min-width: 32px;
+    text-align: right;
+  }
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  button {
+    padding: 12px;
+    background: $color-white;
+    border: 1px solid $color-lavender;
+    border-radius: $radius;
+    font-size: $font-size-base;
+    font-family: $font-main;
+    cursor: pointer;
+    transition: background $transition, border-color $transition;
+
+    &.correct {
+      background: $color-success;
+      border-color: darken($color-success, 10%);
+      color: $color-white;
+    }
+    &.wrong {
+      background: $color-danger;
+      border-color: darken($color-danger, 10%);
+      color: $color-white;
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  p {
+    font-family: $font-main;
+    font-size: $font-size-base;
+  }
+
+  .ok {
+    color: $color-success;
+    font-weight: bold;
+  }
+  .err {
+    color: $color-danger;
+    font-weight: bold;
+  }
+
+  .nextButton {
+    padding: 8px 16px;
+    background: $color-yellow;
+    border: none;
+    border-radius: $radius;
+    cursor: pointer;
+    font-family: $font-main;
+    font-weight: 600;
+    transition: background $transition;
+
+    &:hover {
+      background: $color-accent;
+      color: $color-white;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  .resetButton {
+    padding: 8px 16px;
+    background: $color-light;
+    border: 1px solid $color-accent;
+    border-radius: $radius;
+    cursor: pointer;
+    font-family: $font-main;
+    font-weight: 600;
+    transition: background $transition, color $transition;
+
+    &:hover {
+      background: $color-accent;
+      color: $color-white;
+    }
+  }
+}
+
+.celebration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  margin: 16px 0;
+  animation: pop 0.8s ease-out;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}

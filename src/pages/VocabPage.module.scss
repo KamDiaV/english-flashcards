@@ -1,0 +1,68 @@
+@use '../styles/variables.scss' as *;
+
+.page {
+  padding: 24px;
+  background: $color-white;
+}
+
+.status {
+  padding: 24px;
+  font-family: $font-main;
+  text-align: center;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: $color-dark;
+  font-family: $font-main;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: $font-main;
+
+  th, td {
+    padding: 12px;
+    border: 1px solid $color-lavender;
+    text-align: left;
+  }
+
+  th {
+    background-color: $color-accent;
+    color: $color-white;
+  }
+
+  tr:nth-child(even) {
+    background-color: $color-light;
+  }
+}
+
+.actions {
+  text-align: center;
+}
+
+.repeatButton {
+  display: inline-block;
+  padding: 4px 8px;
+  font-family: $font-main;
+  font-size: $font-size-base;
+  font-weight: 600;
+  color: $color-accent;
+  background-color: transparent;
+  border: 1px solid $color-accent;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: 
+    background-color $transition,
+    color $transition,
+    transform $transition,
+    box-shadow $transition;
+
+  &:hover {
+    background-color: $color-accent;
+    color: $color-white;
+    box-shadow: 0 4px 8px rgba($color-accent, 0.2);
+  }
+}

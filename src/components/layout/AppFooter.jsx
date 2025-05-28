@@ -4,7 +4,7 @@ import styles from './AppFooter.module.scss';
 function AppFooter() {
   return (
     <footer className={styles.footer}>
-      <p className={styles.text}>© 2025 English Word Cards</p>
+      <p className={styles.text}>© 2025 Vocardo | English Word Cards</p>
     </footer>
   );
 }

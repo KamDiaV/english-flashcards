@@ -1,10 +1,12 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import styles from './AppHeader.module.scss';
+import React from 'react'
+import { NavLink, Link } from 'react-router-dom'
+import styles from './AppHeader.module.scss'
 
-function AppHeader() {
+export default function AppHeader() {
   return (
     <header className={styles.header}>
+      <Link to="/about" className={styles.logo}>Vocardo</Link>
+
       <nav className={styles.nav}>
         <NavLink
           to="/"
@@ -31,8 +33,15 @@ function AppHeader() {
           Добавить слово
         </NavLink>
       </nav>
-    </header>
-  );
-}
 
-export default AppHeader;
+      <NavLink
+        to="/vocab"
+        className={({ isActive }) =>
+          isActive ? styles.activeVocab : styles.vocab
+        }
+      >
+        Мой словарный запас
+      </NavLink>
+    </header>
+  )
+}

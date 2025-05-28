@@ -1,121 +1,73 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import styles from './AddWordForm.module.scss';
+import React from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { addWord }                     from '../../api/words'
+import { useForm }                     from '../../hooks/useForm'
+import styles                          from './AddWordForm.module.scss'
 
-const STORAGE_KEY = 'addedWords';
+const FIELDS = [
+  { name: 'english',      label: 'Слово (англ.)',    required: true },
+  { name: 'transcription',label: 'Транскрипция' },
+  { name: 'russian',      label: 'Перевод',          required: true },
+  { name: 'tags',         label: 'Тема' }
+]
 
 export default function AddWordForm() {
-  const [newWord, setNewWord] = useState({
-    english: '',
-    transcription: '',
-    russian: '',
-    tags: '',
-  });
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
-  const queryClient = useQueryClient();
+  const qc = useQueryClient()
 
-  const addMutation = useMutation({
-    mutationFn: word =>
-      axios.post('http://itgirlschool.justmakeit.ru/api/words', word),
-    onSuccess: () => {
-      const entry = {
-        id: Date.now(), 
-        ...newWord
-      };
+  const [newWord, handleChange, resetForm] = useForm({
+    english: '', transcription: '', russian: '', tags: ''
+  })
+  const [success, setSuccess] = React.useState(false)
+  const [error,   setError]   = React.useState('')
 
-      queryClient.setQueryData(['words'], old => [...(old || []), entry]);
+  const mutation = useMutation(
+    addWord,
+    {
+      onSuccess: () => {
+        qc.invalidateQueries(['words'])
+        setSuccess(true)
+        setError('')
+        resetForm()
+      },
+      onError: () => {
+        setError('Не удалось добавить слово')
+        setSuccess(false)
+      }
+    }
+  )
 
-      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      localStorage.setItem(STORAGE_KEY, JSON.stringify([...stored, entry]));
-
-      setNewWord({ english: '', transcription: '', russian: '', tags: '' });
-      setSuccess(true);
-      setError('');
-    },
-    onError: () => {
-      setError('Не удалось добавить слово');
-      setSuccess(false);
-    },
-  });
-
-  const handleChange = ({ target: { name, value } }) => {
-    setNewWord(prev => ({ ...prev, [name]: value }));
-    setSuccess(false);
-    setError('');
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    setError('');
-    setSuccess(false);
-    addMutation.mutate(newWord);
-  };
+  const onSubmit = e => {
+    e.preventDefault()
+    setSuccess(false)
+    setError('')
+    mutation.mutate(newWord)
+  }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <label className={styles.field}>
-        Слово (англ.):
-        <input
-          type="text"
-          name="english"
-          value={newWord.english}
-          onChange={handleChange}
-          required
-          className={styles.input}
-        />
-      </label>
-
-      <label className={styles.field}>
-        Транскрипция:
-        <input
-          type="text"
-          name="transcription"
-          value={newWord.transcription}
-          onChange={handleChange}
-          required
-          className={styles.input}
-        />
-      </label>
-
-      <label className={styles.field}>
-        Перевод:
-        <input
-          type="text"
-          name="russian"
-          value={newWord.russian}
-          onChange={handleChange}
-          required
-          className={styles.input}
-        />
-      </label>
-
-      <label className={styles.field}>
-        Тема:
-        <input
-          type="text"
-          name="tags"
-          value={newWord.tags}
-          onChange={handleChange}
-          className={styles.input}
-        />
-      </label>
+    <form onSubmit={onSubmit} className={styles.form}>
+      {FIELDS.map(({name,label,required}) => (
+        <label key={name} className={styles.field}>
+          {label}:
+          <input
+            name={name}
+            value={newWord[name]}
+            onChange={handleChange}
+            required={required}
+            className={styles.input}
+          />
+        </label>
+      ))}
 
       <button
         type="submit"
-        disabled={addMutation.isLoading}
+        disabled={mutation.isLoading}
         className={styles.button}
       >
-        {addMutation.isLoading ? 'Добавляю…' : 'Добавить'}
+        {mutation.isLoading ? 'Добавляю…' : 'Добавить'}
       </button>
 
-      {success && (
-        <p className={styles.success}>✅ Слово успешно добавлено!</p>
-      )}
-      {error && (
-        <p className={styles.error}>❌ {error}</p>
-      )}
+      {success && <p className={styles.success}>✅ Добавлено!</p>}
+      {error   && <p className={styles.error}>❌ {error}</p>}
     </form>
-  );
+  )
 }

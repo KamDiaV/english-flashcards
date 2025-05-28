@@ -22,6 +22,10 @@
   }
 }
 
+.errorInput {
+  border-color: $color-danger; 
+}
+
 .actions {
   display: flex;
   gap: 6px;

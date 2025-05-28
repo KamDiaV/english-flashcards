@@ -1,0 +1,39 @@
+@use '../../styles/variables.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardWrapper {
+  position: relative;
+  perspective: 1000px;
+  margin-bottom: 24px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  button {
+    padding: 8px 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: $radius;
+    background: $color-lavender;
+    color: $color-dark;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-white;
+      background: $color-accent;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}

@@ -1,13 +1,97 @@
 @use '../styles/variables.scss' as *;
 
-.trainPage {
-  padding: 24px;
+.page {
   background-color: $color-white;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.backToMenu {
+  padding: 8px 16px;
+  background-color: $color-light;
+  color: $color-dark;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  font-size: $font-size-base;
+  font-family: $font-main;
+  transition: all $transition;
+  align-self: flex-start;
+  margin-bottom: 32px;
+
+  &:hover {
+    background-color: $color-accent;
+    color: $color-white;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .title {
-  font-size: 24px;
-  color: $color-dark;
-  margin-top: 16px;
+  align-self: center;
   font-family: $font-main;
+  font-size: 28px;
+  color: $color-dark;
+  margin-bottom: 32px;
+  margin-top: 32px;
+}
+
+.selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.largeButton {
+  width: 240px;
+  padding: 12px 0;
+  font-family: $font-main;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: $color-yellow;
+  color: $color-dark;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: background-color $transition, color $transition;
+
+  &:hover {
+    background-color: $color-accent;
+    color: $color-white;
+  }
+}
+
+.status {
+  font-family: $font-main;
+  font-size: 20px;
+  color: $color-dark;
+  text-align: center;
+  margin: 32px 0;
+}
+
+.emptyActions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.linkButton {
+  padding: 12px 20px;
+  background: $color-yellow;
+  color: $color-dark;
+  font-family: $font-main;
+  font-weight: 600;
+  border-radius: $radius;
+  text-decoration: none;
+  transition: background $transition;
+
+  &:hover {
+    background: $color-accent;
+    color: $color-white;
+  }
 }

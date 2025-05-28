@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import AppLayout from './components/layout/AppLayout';
 
@@ -20,6 +20,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/train" element={<TrainPage />} />
         <Route path="/add"  element={<AddWordPage />} />
+        
         <Route path="/vocab" element={<VocabPage />} />
 
         {/* На всякий случай: всё, что не нашлось, кидаем на About */}

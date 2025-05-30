@@ -5,11 +5,11 @@ import styles from './AppHeader.module.scss'
 export default function AppHeader() {
   return (
     <header className={styles.header}>
-      <Link to="/about" className={styles.logo}>Vocardo</Link>
+      <Link to="/" className={styles.logo}>Vocardo</Link>
 
       <nav className={styles.nav}>
         <NavLink
-          to="/"
+          to="/home"
           className={({ isActive }) =>
             isActive ? styles.activeLink : styles.link
           }

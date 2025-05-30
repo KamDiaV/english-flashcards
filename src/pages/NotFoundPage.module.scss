@@ -1,0 +1,59 @@
+@use '../styles/variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.gif {
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 24px;
+}
+
+.subtitle {
+  font-family: $font-main;
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-dark;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: $font-main;
+  font-size: 120px;
+  font-weight: 700;
+  color: $color-dark;
+  line-height: 1;
+  margin: 0 0 16px;
+}
+
+.text {
+  font-family: $font-main;
+  font-size: 16px;
+  font-weight: 500;
+  color: $color-dark;
+  margin-bottom: 32px;
+}
+
+.button {
+  display: inline-block;
+  font-family: $font-main;
+  font-size: 16px;
+  font-weight: 600;
+  color: $color-dark;
+  text-decoration: none;
+  border: 2px solid $color-dark;
+  border-radius: $radius;
+  padding: 12px 24px;
+  transition: background-color $transition, color $transition;
+
+  &:hover {
+    background-color: $color-dark;
+    color: $color-yellow;
+  }
+}

@@ -8,6 +8,7 @@ import TrainPage from './pages/TrainPage';
 import AddWordPage from './pages/AddWordPage';
 import AboutPage from './pages/AboutPage.jsx';
 import VocabPage from './pages/VocabPage.jsx';
+import NotFoundPage from './pages/NotFoundPage'
 
 import './styles/globals.scss';
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/train" element={<TrainPage />} />
         <Route path="/add" element={<AddWordPage />} />
         <Route path="/vocab"  element={<VocabPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AppLayout>
   );

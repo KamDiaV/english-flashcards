@@ -1,6 +1,12 @@
 @use '../../styles/variables.scss' as *;
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 16px 24px;
@@ -12,6 +18,10 @@
   font-size: 24px;
   font-weight: 700;
   color: $color-white;
+
+  &:hover {
+    color: $color-yellow;
+  }
 }
 
 .nav {

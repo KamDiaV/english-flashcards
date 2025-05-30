@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://KamDiaV.github.io/english-flashcards",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:KamDiaV/english-flashcards.git"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

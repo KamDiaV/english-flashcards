@@ -72,9 +72,14 @@
   border-radius: $radius;
   cursor: pointer;
   transition: background 0.3s;
-
+  
   &:hover {
-    background: $color-success;
+    background: $color-accent;
     color: $color-white;
   }
+}
+
+.checkButton.checked {
+  background: $color-success;
+  color: $color-white;
 }

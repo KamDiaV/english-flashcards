@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/english-flashcards/static/css/main.83519186.css",
-    "main.js": "/english-flashcards/static/js/main.eb40d6b4.js",
+    "main.js": "/english-flashcards/static/js/main.e4e43267.js",
     "static/media/not-found.gif": "/english-flashcards/static/media/not-found.fcc3b59046c01deffb17.gif",
     "index.html": "/english-flashcards/index.html",
     "main.83519186.css.map": "/english-flashcards/static/css/main.83519186.css.map",
-    "main.eb40d6b4.js.map": "/english-flashcards/static/js/main.eb40d6b4.js.map"
+    "main.e4e43267.js.map": "/english-flashcards/static/js/main.e4e43267.js.map"
   },
   "entrypoints": [
     "static/css/main.83519186.css",
-    "static/js/main.eb40d6b4.js"
+    "static/js/main.e4e43267.js"
   ]
 }

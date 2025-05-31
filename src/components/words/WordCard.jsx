@@ -1,5 +1,3 @@
-// src/components/WordCard/WordCard.jsx
-
 import React, { useState } from 'react'
 import styles from './WordCard.module.scss'
 

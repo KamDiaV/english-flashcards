@@ -1,18 +1,11 @@
 @use '../../styles/variables.scss' as *;
 
-.cardContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-}
-
 .cardWrapper {
   perspective: 1000px;
   width: 600px;
   height: 380px;
+  margin-bottom: 0; /* отступ теперь ставит FlipCardGame */
   cursor: pointer;
-  margin-bottom: 16px;
 }
 
 .card {
@@ -40,7 +33,7 @@
   background-color: $color-white;
   border: 1px solid $color-lavender;
   border-radius: $radius;
-  padding: 16px; 
+  padding: 16px;
 }
 
 .cardBack {
@@ -61,25 +54,4 @@
 .translation {
   font-size: 20px;
   font-weight: 500;
-}
-
-.checkButton {
-  padding: 8px 16px;
-  font-size: 16px;
-  background: $color-lavender;
-  color: $color-dark;
-  border: none;
-  border-radius: $radius;
-  cursor: pointer;
-  transition: background 0.3s;
-  
-  &:hover {
-    background: $color-accent;
-    color: $color-white;
-  }
-}
-
-.checkButton.checked {
-  background: $color-success;
-  color: $color-white;
 }

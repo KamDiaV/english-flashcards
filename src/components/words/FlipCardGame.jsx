@@ -20,7 +20,7 @@ export default function FlipCardGame({ words }) {
       ? words[safeIndex]
       : { id: null, english: '', transcription: '', russian: '' }
 
-  const [, saveProgress] = useProgress(currentWord.id ?? '')
+  const [progress, saveProgress] = useProgress(currentWord.id ?? '')
 
   const goPrev = useCallback(() => {
     if (!Array.isArray(words) || words.length === 0) return

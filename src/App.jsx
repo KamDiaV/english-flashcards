@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { ROUTES } from './constants/routes';
 
 import './styles/globals.scss';
 
@@ -20,10 +21,10 @@ function App() {
     <AppLayout>
       <Suspense fallback={<Spinner />}>
         <Routes>
-          <Route path="/" element={<AboutPage />} />
+          <Route path={ROUTES.ABOUT} element={<AboutPage />} />
 
           <Route
-            path="/home"
+            path={ROUTES.HOME}
             element={
               <ErrorBoundary
                 FallbackComponent={(props) => (
@@ -42,7 +43,7 @@ function App() {
           />
 
           <Route
-            path="/train"
+            path={ROUTES.TRAIN}
             element={
               <ErrorBoundary
                 FallbackComponent={(props) => (
@@ -61,7 +62,7 @@ function App() {
           />
 
           <Route
-            path="/add"
+            path={ROUTES.ADD_WORD}
             element={
               <ErrorBoundary
                 FallbackComponent={(props) => (
@@ -80,7 +81,7 @@ function App() {
           />
     
           <Route
-            path="/vocab"
+            path={ROUTES.VOCAB}
             element={
               <ErrorBoundary
                 FallbackComponent={(props) => (
@@ -98,7 +99,7 @@ function App() {
             }
           />
 
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </AppLayout>

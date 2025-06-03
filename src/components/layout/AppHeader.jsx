@@ -1,15 +1,16 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { ROUTES } from '../../constants/routes'
 import styles from './AppHeader.module.scss'
 
 export default function AppHeader() {
   return (
     <header className={styles.header}>
-      <Link to="/" className={styles.logo}>Vocardo</Link>
+      <Link to={ROUTES.ABOUT} className={styles.logo}>Vocardo</Link>
 
       <nav className={styles.nav}>
         <NavLink
-          to="/home"
+          to={ROUTES.HOME}
           className={({ isActive }) =>
             isActive ? styles.activeLink : styles.link
           }
@@ -17,7 +18,7 @@ export default function AppHeader() {
           Главная
         </NavLink>
         <NavLink
-          to="/train"
+          to={ROUTES.TRAIN}
           className={({ isActive }) =>
             isActive ? styles.activeLink : styles.link
           }
@@ -25,7 +26,7 @@ export default function AppHeader() {
           Тренировка
         </NavLink>
         <NavLink
-          to="/add"
+          to={ROUTES.ADD_WORD}
           className={({ isActive }) =>
             isActive ? styles.activeLink : styles.link
           }
@@ -35,7 +36,7 @@ export default function AppHeader() {
       </nav>
 
       <NavLink
-        to="/vocab"
+        to={ROUTES.VOCAB}
         className={({ isActive }) =>
           isActive ? styles.activeVocab : styles.vocab
         }

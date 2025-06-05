@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useQuery }        from '@tanstack/react-query'
 import { Link }            from 'react-router-dom'
-import { fetchMergedWords, STORAGE_KEY_DELETED } from '../api/words'
-import FlipCardGame        from '../components/words/FlipCardGame'
-import TestGame            from '../components/words/TestGame'
+import { fetchMergedWords, STORAGE_KEY_DELETED } from '../../api/words'
+import FlipCardGame        from '../../components/words/FlipCardGame/FlipCardGame'
+import TestGame            from '../../components/words/TestGame/TestGame'
 import styles              from './TrainPage.module.scss'
 
 /**

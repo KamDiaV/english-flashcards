@@ -9,12 +9,12 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import GenericErrorPage from './components/ErrorBoundary/GenericErrorPage';
 import Spinner from './components/Spinner/Spinner';
 
-const HomePage = React.lazy(() => import('./pages/HomePage'));
-const TrainPage = React.lazy(() => import('./pages/TrainPage'));
-const AddWordPage = React.lazy(() => import('./pages/AddWordPage'));
-const AboutPage = React.lazy(() => import('./pages/AboutPage'));
-const VocabPage = React.lazy(() => import('./pages/VocabPage'));
-const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+const AboutPage = React.lazy(() => import('./pages/AboutPage/AboutPage'));
+const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
+const TrainPage = React.lazy(() => import('./pages/TrainPage/TrainPage'));
+const AddWordPage = React.lazy(() => import('./pages/AddWordPage/AddWordPage'));
+const VocabPage = React.lazy(() => import('./pages/VocabPage/VocabPage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { useQuery, useQueryClient }            from '@tanstack/react-query'
-import { fetchMergedWords }                    from '../../api/words'
-import { useProgress } from '../../hooks/useProgress'
+import { fetchMergedWords }                    from '../../../api/words'
+import { useProgress } from '../../../hooks/useProgress'
 import styles                                  from './TestGame.module.scss'
 
 function shuffle(arr) {

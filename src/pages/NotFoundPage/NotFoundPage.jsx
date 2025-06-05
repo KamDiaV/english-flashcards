@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './NotFoundPage.module.scss'
-import NotFoundGif from '../assets/not-found.gif'
+import NotFoundGif from '../../assets/not-found.gif'
 
 export default function NotFoundPage() {
   return (

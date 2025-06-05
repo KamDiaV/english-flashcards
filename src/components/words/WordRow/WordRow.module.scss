@@ -1,4 +1,4 @@
-@use '../../styles/variables.scss' as *;
+@use '../../../styles/variables.scss' as *;
 
 .row:nth-child(even) {
   background-color: $color-light;

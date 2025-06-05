@@ -1,5 +1,5 @@
 import React from 'react';
-import WordList from '../components/words/WordList';
+import WordList from '../../components/words/WordList/WordList';
 import styles from './HomePage.module.scss';
 
 function HomePage() {

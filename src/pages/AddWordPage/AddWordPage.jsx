@@ -1,5 +1,5 @@
 import React from 'react';
-import AddWordForm from '../components/words/AddWordForm';
+import AddWordForm from '../../components/words/AddWordForm/AddWordForm';
 import styles from './AddWordPage.module.scss';
 
 export default function AddWordPage() {

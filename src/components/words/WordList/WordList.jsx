@@ -1,9 +1,9 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchMergedWords } from '../../api/words'
-import { useWordMutations } from '../../hooks/useWordMutations'
-import WordRow from './WordRow'
-import Spinner from '../Spinner/Spinner'  
+import { fetchMergedWords } from '../../../api/words'
+import { useWordMutations } from '../../../hooks/useWordMutations'
+import WordRow from '../WordRow/WordRow'
+import Spinner from '../../Spinner/Spinner'  
 import styles  from './WordList.module.scss'
 
 export default function WordList() {

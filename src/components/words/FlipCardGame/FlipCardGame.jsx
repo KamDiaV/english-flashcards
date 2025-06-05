@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence }     from 'framer-motion'
 import { useQueryClient }              from '@tanstack/react-query'
-import { useProgress }                 from '../../hooks/useProgress'
-import WordCard                        from './WordCard'
+import { useProgress }                 from '../../../hooks/useProgress'
+import WordCard                        from '../WordCard/WordCard'
 import styles                          from './FlipCardGame.module.scss'
 
 export default function FlipCardGame({ words }) {

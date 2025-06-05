@@ -23,6 +23,7 @@ export function TestGameUI(props) {
     reset,
     safeIndex,
     wordsLength,
+    handleClearSelection,
   } = props
 
   if (isLoading) {
@@ -102,7 +103,10 @@ export function TestGameUI(props) {
           </p>
 
           <button
-            onClick={next}
+            onClick={() => {
+              handleClearSelection()
+              next()
+            }}
             disabled={safeIndex === wordsLength - 1}
             className={styles.nextButton}
           >
@@ -110,7 +114,13 @@ export function TestGameUI(props) {
           </button>
 
           {safeIndex === wordsLength - 1 && (
-            <button onClick={reset} className={styles.resetButton}>
+            <button 
+              onClick={() => {
+                handleClearSelection()
+                reset()
+              }}
+              className={styles.resetButton}
+            >
               Начать сначала
             </button>
           )}

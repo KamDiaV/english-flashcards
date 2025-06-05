@@ -13,28 +13,6 @@ import { useWordNavigation } from './useWordNavigation'
  *  • формирование options и correctAnswer (useOptions)
  *  • обработка выбора варианта (handleSelect)
  *  • обработка клика по экрану (handleScreenClick)
- *
- * @param {Array} words — массив «тренировочных» слов, передаваемых из родителя
- * @returns {{
- *   isLoading: boolean,
- *   isError: boolean,
- *   empty: boolean,
- *   word: object|null,
- *   direction: string,
- *   setDirection: (dir: string) => void,
- *   options: string[],
- *   correctAnswer: string|null,
- *   selected: string|null,
- *   isCorrect: boolean|null,
- *   rawCount: number,
- *   displayCount: number,
- *   celebrating: boolean,
- *   handleSelect: (choice: string) => void,
- *   handleScreenClick: () => void,
- *   next: () => void,
- *   reset: () => void,
- *   safeIndex: number
- * }}
  */
 
 export function useTestGameLogic(words) {
@@ -50,10 +28,7 @@ export function useTestGameLogic(words) {
     data: allWords = [],
     isLoading: allLoading,
     isError: allError,
-  } = useQuery(
-    ['wordsFull'],
-    fetchMergedWords,
-    {
+  } = useQuery(['wordsFull'],fetchMergedWords,{
       refetchOnWindowFocus: false,
       staleTime: 5 * 60_000,
     }
@@ -78,6 +53,13 @@ export function useTestGameLogic(words) {
     safeIndex,
     direction
   )
+
+  const handleClearSelection = useCallback(() => {
+    setSelected(null)
+    setIsCorrect(null)
+    setCelebrating(false)
+    setDisplayedStreak(null)
+  }, [])
 
   const invalidateTrainAndVocab = useCallback(() => {
     qc.invalidateQueries({
@@ -145,6 +127,7 @@ export function useTestGameLogic(words) {
     celebrating,
     handleSelect,
     handleScreenClick,
+    handleClearSelection,
     next,
     reset,
   }

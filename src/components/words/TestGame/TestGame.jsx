@@ -1,16 +1,10 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { fetchMergedWords } from '../../../api/words'
 import { useProgress } from '../../../hooks/useProgress'
+import { useOptions } from '../../../hooks/useOptions'
 import Spinner from '../../Spinner/Spinner'
 import styles from './TestGame.module.scss'
-
-function shuffle(arr) {
-  return arr
-    .map(v => ({ sort: Math.random(), value: v }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(o => o.value)
-}
 
 export default function TestGame({ words }) {
   const qc = useQueryClient()
@@ -22,15 +16,15 @@ export default function TestGame({ words }) {
   const [isCorrect, setIsCorrect] = useState(null)
   const [direction, setDirection] = useState('en-ru')
 
-  const { data: allWords = [], isLoading: allLoading, isError: allError } =
-    useQuery(
-      ['wordsFull'],
-      fetchMergedWords,
-      {
-        refetchOnWindowFocus: false,
-        staleTime: 5 * 60_000,
-      }
-    )
+  const {
+    data: allWords = [],
+    isLoading: allLoading,
+    isError: allError,
+  } = useQuery(['wordsFull'],fetchMergedWords,{
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60_000,
+    }
+  )
 
   const empty = !Array.isArray(words) || words.length === 0
   const safeIndex = empty ? 0 : Math.min(index, words.length - 1)
@@ -47,17 +41,7 @@ export default function TestGame({ words }) {
   const [progress, saveProgress] = useProgress(currentId)
   const { correctStreak = 0, knownByUser = false } = progress
 
-  const options = useMemo(() => {
-    if (empty) return []
-    const pool = allWords
-      .filter(w => w.id !== word.id)
-      .map(w => (direction === 'en-ru' ? w.russian : w.english))
-
-    const distractors = shuffle(pool).slice(0, 3)
-    const correctVal = direction === 'en-ru' ? word.russian : word.english
-
-    return shuffle([correctVal, ...distractors])
-  }, [allWords, word, direction, empty])
+  const { options, correctAnswer } = useOptions(allWords, word, direction)
 
   if (allLoading) {
     return <Spinner />
@@ -69,11 +53,8 @@ export default function TestGame({ words }) {
     return <Spinner />
   }
 
-  const correctAnswer = (
-    direction === 'en-ru' ? word.russian : word.english
-  ).toLowerCase()
-
   const handleSelect = choice => {
+    if (selected !== null) return
     setSelected(choice)
     const ok = choice.toLowerCase() === correctAnswer
     setIsCorrect(ok)

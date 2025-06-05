@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { fetchMergedWords } from '../../../api/words'
 import { useProgress } from '../../../hooks/useProgress'
 import { useOptions } from '../../../hooks/useOptions'
+import { useWordNavigation } from '../../../hooks/useWordNavigation'
 import Spinner from '../../Spinner/Spinner'
 import styles from './TestGame.module.scss'
 
@@ -26,17 +27,14 @@ export default function TestGame({ words }) {
     }
   )
 
-  const empty = !Array.isArray(words) || words.length === 0
-  const safeIndex = empty ? 0 : Math.min(index, words.length - 1)
-  const word = empty ? null : words[safeIndex]
-  const currentId = word?.id ?? null
+  const { empty, safeIndex, word, currentId, next, reset } = useWordNavigation(words)
 
   useEffect(() => {
     setCelebrating(false)
     setDisplayedStreak(null)
     setSelected(null)
     setIsCorrect(null)
-  }, [currentId])
+    }, [currentId])
 
   const [progress, saveProgress] = useProgress(currentId)
   const { correctStreak = 0, knownByUser = false } = progress
@@ -82,20 +80,6 @@ export default function TestGame({ words }) {
     setIsCorrect(null)
     qc.invalidateQueries(['trainWords'])
     qc.invalidateQueries(['vocabWords'])
-  }
-
-  const next = () => {
-    setSelected(null)
-    setIsCorrect(null)
-    if (safeIndex < words.length - 1) {
-      setIndex(i => i + 1)
-    }
-  }
-
-  const reset = () => {
-    setIndex(0)
-    setSelected(null)
-    setIsCorrect(null)
   }
 
   const rawCount = displayedStreak ?? correctStreak

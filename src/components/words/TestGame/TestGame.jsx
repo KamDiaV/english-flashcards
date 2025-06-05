@@ -12,7 +12,6 @@ export default function TestGame({ words }) {
 
   const [celebrating, setCelebrating] = useState(false)
   const [displayedStreak, setDisplayedStreak] = useState(null)
-  const [index, setIndex] = useState(0)
   const [selected, setSelected] = useState(null)
   const [isCorrect, setIsCorrect] = useState(null)
   const [direction, setDirection] = useState('en-ru')
@@ -39,7 +38,7 @@ export default function TestGame({ words }) {
   const [progress, saveProgress] = useProgress(currentId)
   const { correctStreak = 0, knownByUser = false } = progress
 
-  const { options, correctAnswer } = useOptions(allWords, word, direction)
+  const { options, correctAnswer } = useOptions(allWords, words, safeIndex, direction)
 
   if (allLoading) {
     return <Spinner />

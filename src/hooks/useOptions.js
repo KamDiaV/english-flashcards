@@ -2,19 +2,29 @@ import { useMemo } from 'react'
 import shuffle from '../utils/shuffle'
 
 /**
- * useOptions — хук, который по входным данным (список всех слов, текущее слово, направление)
- * возвращает:
- *   - options: массив строк (перемешанные варианты, включая правильный)
- *   - correctAnswer: строка — правильный вариант (в нижнем регистре, готовая для сравнения)
+ * useOptions — принимает:
+ *   - allWords: полный массив слов (в том числе не только тренировочных)
+ *   - words:   массив текущих «тренировочных» слов (откуда берётся слово по safeIndex)
+ *   - safeIndex: индекс текущего слова в массиве words
+ *   - direction: 'en-ru' или 'ru-en'
  *
- * @param {Array} allWords   — полный массив вопросов/слов (каждый элемент { id, english, russian, … })
- * @param {Object|null} word — объект текущего слова (или null)
- * @param {String} direction — 'en-ru' или 'ru-en'
- * @returns {{ options: string[], correctAnswer: string|null }}
+ * Возвращает:
+ *   - options: массив из 4 вариантов (правильный + 3 «отвлекающих»), уже случайно перемешанный
+ *   - correctAnswer: правильное значение (низкий регистр, для простого сравнения)
  */
 
-export function useOptions(allWords, word, direction) {
+export function useOptions(allWords, words, safeIndex, direction) {
   return useMemo(() => {
+    if (
+      !Array.isArray(words) ||
+      words.length === 0 ||
+      safeIndex < 0 ||
+      safeIndex >= words.length
+    ) {
+      return { options: [], correctAnswer: null }
+    }
+
+    const word = words[safeIndex]
     if (!word || !Array.isArray(allWords) || allWords.length === 0) {
       return { options: [], correctAnswer: null }
     }
@@ -33,5 +43,5 @@ export function useOptions(allWords, word, direction) {
       options,
       correctAnswer: correctVal.toLowerCase(),
     }
-  }, [allWords, word, direction])
+  }, [allWords, words, safeIndex, direction])
 }

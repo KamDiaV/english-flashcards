@@ -1,9 +1,9 @@
 import React from 'react';
-import './Spinner.scss';
+import styles from './Spinner.module.scss'
 
 const Spinner = () => (
-  <div className="spinner-container">
-    <div className="spinner" />
+  <div className={styles.container}>
+    <div className={styles.spinner} />
   </div>
 );
 

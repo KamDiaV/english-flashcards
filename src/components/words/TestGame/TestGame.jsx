@@ -60,16 +60,16 @@ export default function TestGame({ words }) {
   const handleSelect = choice => {
     if (selected !== null) return
     setSelected(choice)
-    const ok = choice.toLowerCase() === correctAnswer
-    setIsCorrect(ok)
+    const isCorrectChoice = choice.toLowerCase() === correctAnswer
+    setIsCorrect(isCorrectChoice)
 
-    const nextStreak = ok ? correctStreak + 1 : 0
+    const nextStreak = isCorrectChoice ? correctStreak + 1 : 0
     const update = { correctStreak: nextStreak }
     if (nextStreak >= 5) update.knownByUser = true
 
     saveProgress(update)
 
-    if (ok && nextStreak >= 5) {
+    if (isCorrectChoice && nextStreak >= 5) {
       setCelebrating(true)
       setDisplayedStreak(nextStreak)
     } else {

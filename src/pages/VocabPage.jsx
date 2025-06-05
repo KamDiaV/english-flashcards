@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { fetchMergedWords }         from '../api/words'
 import { resetProgress } from '../hooks/useProgress'
+import Spinner from '../components/Spinner/Spinner'
 import styles                       from './VocabPage.module.scss'
 
 export default function VocabPage() {
@@ -30,7 +31,7 @@ export default function VocabPage() {
     )
   }
 
-  if (isLoading) return <p className={styles.status}>Загрузка…</p>
+  if (isLoading) return <Spinner />
   if (isError)   return <p className={styles.status}>Ошибка при загрузке</p>
 
   return (

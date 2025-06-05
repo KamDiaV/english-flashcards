@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchMergedWords } from '../../api/words'
 import { useWordMutations } from '../../hooks/useWordMutations'
 import WordRow from './WordRow'
+import Spinner from '../Spinner/Spinner'  
 import styles  from './WordList.module.scss'
 
 export default function WordList() {
@@ -14,7 +15,7 @@ export default function WordList() {
   )
 
   if (isLoading) {
-    return <p className={styles.loading}>Загрузка слов…</p>
+    return <Spinner />
   }
 
   return (

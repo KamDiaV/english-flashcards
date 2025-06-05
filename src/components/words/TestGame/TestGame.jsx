@@ -50,6 +50,13 @@ export default function TestGame({ words }) {
     return <Spinner />
   }
 
+  const invalidateTrainAndVocab = () => {
+    qc.invalidateQueries({
+      predicate: query =>
+        ['trainWords', 'vocabWords'].includes(query.queryKey[0]),
+    })
+  }
+
   const handleSelect = choice => {
     if (selected !== null) return
     setSelected(choice)
@@ -66,8 +73,7 @@ export default function TestGame({ words }) {
       setCelebrating(true)
       setDisplayedStreak(nextStreak)
     } else {
-      qc.invalidateQueries(['trainWords'])
-      qc.invalidateQueries(['vocabWords'])
+      invalidateTrainAndVocab()
     }
   }
 
@@ -77,8 +83,7 @@ export default function TestGame({ words }) {
     setDisplayedStreak(null)
     setSelected(null)
     setIsCorrect(null)
-    qc.invalidateQueries(['trainWords'])
-    qc.invalidateQueries(['vocabWords'])
+    invalidateTrainAndVocab()
   }
 
   const rawCount = displayedStreak ?? correctStreak

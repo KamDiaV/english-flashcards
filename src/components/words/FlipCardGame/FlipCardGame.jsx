@@ -1,37 +1,37 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence }     from 'framer-motion'
-import { useQueryClient }              from '@tanstack/react-query'
-import { useProgress }                 from '../../../hooks/useProgress'
-import WordCard                        from '../WordCard/WordCard'
-import styles                          from './FlipCardGame.module.scss'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useQueryClient } from '@tanstack/react-query'
+import { useProgress } from '../../../hooks/useProgress'
+import WordCard from '../WordCard/WordCard'
+import styles from './FlipCardGame.module.scss'
 
 export default function FlipCardGame({ words }) {
-  const [idx, setIdx]           = useState(0)     
-  const [direction, setDirection] = useState(1)   
-  const [marked, setMarked]     = useState(false) 
-
   const qc = useQueryClient()
 
-  const safeIndex =
-    Array.isArray(words) && words.length > 0 ? Math.min(idx, words.length - 1) : 0
+  const [idx, setIdx] = useState(0)
+  const [direction, setDirection] = useState(1)
+  const [marked, setMarked] = useState(false)
 
-  const currentWord =
-    Array.isArray(words) && words.length > 0
-      ? words[safeIndex]
-      : { id: null, english: '', transcription: '', russian: '' }
+  const [learnedCount, setLearnedCount] = useState(0)
+
+  const safeIndex = Array.isArray(words) && words.length
+    ? Math.min(idx, words.length - 1)
+    : 0
+
+  const currentWord = Array.isArray(words) && words.length
+    ? words[safeIndex]
+    : { id: null, english: '', transcription: '', russian: '' }
 
   const [progress, saveProgress] = useProgress(currentWord.id ?? '')
 
   const goPrev = useCallback(() => {
-    if (!Array.isArray(words) || words.length === 0) return
-    if (safeIndex === 0) return
+    if (!words?.length || safeIndex === 0) return
     setDirection(-1)
     setIdx(i => i - 1)
   }, [safeIndex, words])
 
   const goNext = useCallback(() => {
-    if (!Array.isArray(words) || words.length === 0) return
-    if (safeIndex === words.length - 1) return
+    if (!words?.length || safeIndex === words.length - 1) return
     setDirection(1)
     setIdx(i => i + 1)
   }, [safeIndex, words])
@@ -41,6 +41,13 @@ export default function FlipCardGame({ words }) {
     qc.invalidateQueries(['trainWords'])
     qc.invalidateQueries(['vocabWords'])
     setMarked(true)
+  
+    setLearnedCount(c => c + 1)
+  
+    setTimeout(() => {
+      setMarked(false)
+      goNext()
+    }, 500)
   }
 
   useEffect(() => {
@@ -55,7 +62,7 @@ export default function FlipCardGame({ words }) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [goPrev, goNext]) 
+  }, [goPrev, goNext])
 
   const variants = {
     enter: dir => ({
@@ -77,19 +84,16 @@ export default function FlipCardGame({ words }) {
     }),
   }
 
-  function handleAnimationComplete(definition) {
-    if (marked && definition === 'exit') {
-      setMarked(false)
-      goNext()
-    }
-  }
-
   return (
     <div className={styles.container}>
-      {!Array.isArray(words) || words.length === 0 ? (
+      {!words?.length ? (
         <p className={styles.status}>Нет слов для тренировки.</p>
       ) : (
         <>
+          <div className={styles.learnedCounter}>
+            Выучено слов за эту тренировку: <strong>{learnedCount}</strong>
+          </div>
+
           <div className={styles.cardWrapper}>
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
@@ -101,7 +105,6 @@ export default function FlipCardGame({ words }) {
                 exit="exit"
                 transition={{ duration: 0.5 }}
                 className={styles.cardMotion}
-                onAnimationComplete={handleAnimationComplete}
               >
                 <WordCard
                   english={currentWord.english}

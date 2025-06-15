@@ -7,30 +7,26 @@
 }
 
 .cardWrapper {
-  /* 
-    Ограничиваем «рамки» для анимации:
-    карточка (380px высоты) находится внутри 400px контейнера, 
-    и всё, что выходит за 400px, скрывается (overflow: hidden).
-  */
   perspective: 1000px;
   width: 600px;
-  height: 400px;       /* 380px карточки + 20px буфера по высоте */
+  height: 400px;      
   margin-bottom: 16px;
   position: relative;
-  overflow: hidden;    /* Скрываем всё, что выходит за эти границы */
+  overflow: hidden;   
 }
 
 .cardMotion {
-  /* 
-    Делаем motion-обёртку абсолютно позиционированной,
-    чтобы она не “сдвигалась” другими элементами страницы,
-    а была привязана именно к границам cardWrapper.
-  */
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.learnedCounter {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: $color-dark;
 }
 
 .checkButton {
@@ -41,11 +37,11 @@
   border: none;
   border-radius: $radius;
   cursor: pointer;
-  margin-bottom: 24px;  /* От кнопки до блока со стрелками */
+  margin-bottom: 24px;  
   transition:
     background $transition,
     color $transition,
-    transform 0.2s;
+    transform 0.01s;
 
   &:hover {
     transform: scale(1.05);

@@ -1,0 +1,45 @@
+@use '../../styles/variables.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 300px;
+  margin: 20px auto;
+}
+
+.input {
+  padding: 8px 12px;
+  font-size: $font-size-base;
+  border: 1px solid $color-lavender;
+  border-radius: $radius;
+  transition: border $transition;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+}
+
+.button {
+  padding: 8px 12px;
+  background-color: $color-yellow;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  font-family: $font-main;
+  font-weight: 600;
+  transition: background-color $transition;
+
+  &:hover {
+    background-color: $color-accent;
+    color: $color-white;
+  }
+}
+
+.displayText {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: $color-dark;
+  text-align: center;
+}

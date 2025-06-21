@@ -8,6 +8,26 @@
   cursor: pointer;
 }
 
+
+.flipIcon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  color: $color-dark;
+  transition: color $transition;
+
+  &:hover {
+    color: $color-accent;
+  }
+
+  &:focus {
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba($color-accent, 0.4);
+    border-radius: 50%;
+  }
+}
+
 .card {
   width: 100%;
   height: 100%;

@@ -34,6 +34,13 @@ export default function WordRow({ word, onSave, onDelete }) {
     setEdited(word)
   }
 
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSave()
+    }
+  }
+
   return (
     <tr className={styles.row}>
       {isEditing ? (
@@ -43,6 +50,7 @@ export default function WordRow({ word, onSave, onDelete }) {
               name="english"
               value={edited.english}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               className={`${styles.input} ${englishInvalid ? styles.errorInput : ''}`}
             />
           </td>
@@ -51,6 +59,7 @@ export default function WordRow({ word, onSave, onDelete }) {
               name="transcription"
               value={edited.transcription}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               className={`${styles.input} ${transcriptionInvalid ? styles.errorInput : ''}`}
             />
           </td>
@@ -59,6 +68,7 @@ export default function WordRow({ word, onSave, onDelete }) {
               name="russian"
               value={edited.russian}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               className={`${styles.input} ${russianInvalid ? styles.errorInput : ''}`}
             />
           </td>
@@ -67,6 +77,7 @@ export default function WordRow({ word, onSave, onDelete }) {
               name="tags"
               value={edited.tags || ''}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               className={`${styles.input} ${tagsInvalid ? styles.errorInput : ''}`}
             />
           </td>

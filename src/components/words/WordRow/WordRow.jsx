@@ -6,7 +6,9 @@ export default function WordRow({ word, onSave, onDelete }) {
   const [edited, setEdited]       = useState(word)
 
   const englishInvalid = isEditing && !edited.english.trim()
+  const transcriptionInvalid = isEditing && !edited.transcription.trim()
   const russianInvalid = isEditing && !edited.russian.trim()
+  const tagsInvalid = isEditing && !edited.tags.trim()
 
   useEffect(() => {
     if (isEditing) setEdited(word)
@@ -18,8 +20,12 @@ export default function WordRow({ word, onSave, onDelete }) {
   }
 
   const handleSave = () => {
-    if (englishInvalid || russianInvalid) return
-    onSave(edited)
+    if (englishInvalid || transcriptionInvalid || russianInvalid || tagsInvalid) {
+      alert('Ошибка: заполните все поля перед сохранением')
+      return
+    }
+    console.log('Сохранено слово:', edited)
+    onSave(edited)            
     setIsEditing(false)
   }
 
@@ -45,7 +51,7 @@ export default function WordRow({ word, onSave, onDelete }) {
               name="transcription"
               value={edited.transcription}
               onChange={handleChange}
-              className={styles.input}
+              className={`${styles.input} ${transcriptionInvalid ? styles.errorInput : ''}`}
             />
           </td>
           <td>
@@ -61,14 +67,14 @@ export default function WordRow({ word, onSave, onDelete }) {
               name="tags"
               value={edited.tags || ''}
               onChange={handleChange}
-              className={styles.input}
+              className={`${styles.input} ${tagsInvalid ? styles.errorInput : ''}`}
             />
           </td>
           <td className={styles.actions}>
             <button
               onClick={handleSave}
               className={styles.button}
-              disabled={englishInvalid || russianInvalid}
+              disabled={englishInvalid || transcriptionInvalid || russianInvalid || tagsInvalid}
             >
               💾
             </button>
@@ -78,16 +84,11 @@ export default function WordRow({ word, onSave, onDelete }) {
       ) : (
         <>  
           <td>{word.english}</td>
-          <td>{word.transcription || '—'}</td>
+          <td>{word.transcription}</td>
           <td>{word.russian}</td>
-          <td>{word.tags || '—'}</td>
+          <td>{word.tags}</td>
           <td className={styles.actions}>
-            <button
-              onClick={() => setIsEditing(true)}
-              className={styles.button}
-            >
-              ✏️
-            </button>
+            <button onClick={() => setIsEditing(true)} className={styles.button}>✏️</button>
             <button onClick={onDelete} className={styles.button}>🗑</button>
           </td>
         </>

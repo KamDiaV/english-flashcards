@@ -25,6 +25,11 @@
       border-color: $color-accent;
       box-shadow: 0 0 0 2px rgba($color-accent, 0.2);
     }
+
+    &.errorInput {
+      border-color: $color-danger;
+      box-shadow: 0 0 0 2px rgba($color-danger, 0.2);
+    }
   }
 }
 
@@ -44,6 +49,15 @@
   }
   &:active {
     transform: scale(0.95);
+  }
+}
+
+.buttonInactive {
+  background-color: $color-lightGray;
+  color: $color-dark;
+  cursor: pointer;
+  &:hover {
+    background-color: $color-lightGray;
   }
 }
 

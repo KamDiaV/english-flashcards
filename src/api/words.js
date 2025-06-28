@@ -19,24 +19,36 @@ export function fetchWordsFromServer() {
  */
 export function addWordOnServer(word) {
   return axios
-    .post(`${API_URL}/words`, word)
+    .post(`${API_URL}/words/add`, word)
     .then(res => res.data)
 }
 
 /**
  * Обновляем слово на сервере
  */
+// export function updateWordOnServer(word) {
+//   return axios
+//     .put(`${API_URL}/words/${word.id}`, word)
+//     .then(res => res.data)
+// }
+
 export function updateWordOnServer(word) {
   return axios
-    .put(`${API_URL}/words/${word.id}`, word)
+    .post(`${API_URL}/words/${word.id}/update`, word)
     .then(res => res.data)
 }
 
 /**
  * Удаляем слово на сервере
  */
+// export function deleteWordOnServer(id) {
+//   return axios.delete(`${API_URL}/words/${id}`)
+// }
+
 export function deleteWordOnServer(id) {
-  return axios.delete(`${API_URL}/words/${id}`)
+  return axios
+    .post(`${API_URL}/words/${id}/delete`)
+    .then(res => res.data)
 }
 
 /**

@@ -1,21 +1,24 @@
-import React from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { fetchMergedWords } from '../../../api/words'
-import { useWordMutations } from '../../../hooks/useWordMutations'
+import React, { useContext } from 'react'
+import { WordsContext } from '../../../context/WordsContext'
 import WordRow from '../WordRow/WordRow'
-import Spinner from '../../Spinner/Spinner'  
-import styles  from './WordList.module.scss'
+import Spinner from '../../Spinner/Spinner'
+import ErrorDisplay from '../../ErrorBoundary/ErrorBoundary'
+import styles from './WordList.module.scss'
 
 export default function WordList() {
-  const { deleteWord, updateWord } = useWordMutations()
-  const { data: words = [], isLoading } = useQuery(
-    ['words'],
-    fetchMergedWords,
-    { staleTime: 300_000, refetchOnWindowFocus: false }
-  )
+  const {
+    words = [],
+    loading,
+    error,
+    updateWord,
+    deleteWord
+  } = useContext(WordsContext)
 
-  if (isLoading) {
+  if (loading) {
     return <Spinner />
+  }
+  if (error) {
+    return <ErrorDisplay message={error} />
   }
 
   return (
@@ -35,7 +38,7 @@ export default function WordList() {
             key={w.id}
             word={w}
             onDelete={() => deleteWord(w.id)}
-            onSave={updated => updateWord(updated)}
+            onSave={upd => updateWord(upd)}
           />
         ))}
       </tbody>

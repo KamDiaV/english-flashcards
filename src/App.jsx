@@ -5,8 +5,7 @@ import { ROUTES } from './constants/routes';
 import './styles/globals.scss';
 
 import AppLayout from './components/layout/AppLayout';
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import GenericErrorPage from './components/ErrorBoundary/GenericErrorPage';
+import ErrorBoundaryWrapper from './components/ErrorBoundary/ErrorBoundaryWrapper'
 import Spinner from './components/Spinner/Spinner';
 
 // временно 
@@ -33,76 +32,56 @@ function App() {
           <Route
             path={ROUTES.HOME}
             element={
-              <ErrorBoundary
-                FallbackComponent={(props) => (
-                  <GenericErrorPage
-                    title="Не удалось загрузить Словарь"
-                    message="Попробуйте обновить страницу или зайти позже."
-                    linkPath="/home"
-                    buttonText="Обновить"
-                    errorInfo={props.errorInfo}
-                  />
-                )}
+              <ErrorBoundaryWrapper
+                title="Не удалось загрузить Словарь"
+                message="Попробуйте обновить страницу или зайти позже."
+                linkPath="/home"
+                buttonText="Обновить"
               >
                 <HomePage />
-              </ErrorBoundary>
+              </ErrorBoundaryWrapper>
             }
           />
 
           <Route
             path={ROUTES.TRAIN}
             element={
-              <ErrorBoundary
-                FallbackComponent={(props) => (
-                  <GenericErrorPage
-                    title="Ошибка на странице «Тренировка»"
-                    message="Не удалось загрузить TrainPage. Пожалуйста, попробуйте ещё раз."
-                    linkPath="/train"
-                    buttonText="Попробовать снова"
-                    errorInfo={props.errorInfo}
-                  />
-                )}
+              <ErrorBoundaryWrapper
+                title="Ошибка на странице «Тренировка»"
+                message="Не удалось загрузить TrainPage. Пожалуйста, попробуйте ещё раз."
+                linkPath="/train"
+                buttonText="Обновить"
               >
                 <TrainPage />
-              </ErrorBoundary>
+              </ErrorBoundaryWrapper>
             }
           />
 
           <Route
             path={ROUTES.ADD_WORD}
             element={
-              <ErrorBoundary
-                FallbackComponent={(props) => (
-                  <GenericErrorPage
-                    title="Не удалось загрузить форму «Добавление слова»"
-                    message="Произошла внутренняя ошибка при попытке показать AddWordPage."
-                    linkPath="/add"
-                    buttonText="Обновить страницу"
-                    errorInfo={props.errorInfo}
-                  />
-                )}
+              <ErrorBoundaryWrapper
+                title="Не удалось загрузить форму «Добавление слова»"
+                message="Произошла внутренняя ошибка при попытке показать AddWordPage."
+                linkPath="/add"
+                buttonText="Обновить"
               >
                 <AddWordPage />
-              </ErrorBoundary>
+              </ErrorBoundaryWrapper>
             }
-          />
-    
+          />        
+  
           <Route
             path={ROUTES.VOCAB}
             element={
-              <ErrorBoundary
-                FallbackComponent={(props) => (
-                  <GenericErrorPage
-                    title="Ошибка на странице Мой словарный запас"
-                    message="VocabPage не удалось загрузить. Попробуйте зайти позже."
-                    linkPath="/vocab"
-                    buttonText="Повторить попытку"
-                    errorInfo={props.errorInfo}
-                  />
-                )}
+              <ErrorBoundaryWrapper
+                title="Ошибка на странице Мой словарный запас"
+                message="VocabPage не удалось загрузить. Попробуйте зайти позже."
+                linkPath="/vocab"
+                buttonText="Обновить"
               >
                 <VocabPage />
-              </ErrorBoundary>
+              </ErrorBoundaryWrapper>
             }
           />
 

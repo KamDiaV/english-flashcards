@@ -22,10 +22,8 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       const { FallbackComponent } = this.props;
       if (FallbackComponent) {
-        // Передаём errorInfo в FallbackComponent
         return <FallbackComponent errorInfo={this.state.errorInfo} />;
       }
-      // Если не передали ни одного FallbackComponent — можно показать простое сообщение:
       return (
         <div style={{ padding: '2rem', textAlign: 'center' }}>
           <h2>Упс... Что-то пошло не так.</h2>

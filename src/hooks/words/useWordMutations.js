@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { QUERY_KEYS } from '../../constants/queryKeys'
+import { QUERY_KEYS }   from '../../constants/queryKeys'
 import {
-  deleteWord as apiDeleteWord,
-  updateWord as apiUpdateWord,
+  deleteWord   as apiDeleteWord,
+  updateWord   as apiUpdateWord,
 } from '../../api/words'
 
 export function useWordMutations() {
@@ -11,7 +11,7 @@ export function useWordMutations() {
   const deleteMutation = useMutation({
     mutationFn: apiDeleteWord,
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS })
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS_FULL })
       qc.invalidateQueries({ queryKey: QUERY_KEYS.TRAIN_WORDS })
       qc.invalidateQueries({ queryKey: QUERY_KEYS.VOCAB_WORDS })
     },
@@ -20,7 +20,7 @@ export function useWordMutations() {
   const updateMutation = useMutation({
     mutationFn: apiUpdateWord,
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS })
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS_FULL })
       qc.invalidateQueries({ queryKey: QUERY_KEYS.TRAIN_WORDS })
       qc.invalidateQueries({ queryKey: QUERY_KEYS.VOCAB_WORDS })
     },

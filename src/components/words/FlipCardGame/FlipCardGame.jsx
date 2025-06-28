@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQueryClient } from '@tanstack/react-query'
 import { useProgress } from '../../../hooks/words/useProgress'
+import { QUERY_KEYS } from '../../../constants/queryKeys'
 import WordCard from '../WordCard/WordCard'
 import styles from './FlipCardGame.module.scss'
 
@@ -38,8 +39,8 @@ export default function FlipCardGame({ words }) {
 
   function handleMarkKnown() {
     saveProgress({ knownByUser: true })
-    qc.invalidateQueries(['trainWords'])
-    qc.invalidateQueries(['vocabWords'])
+    qc.invalidateQueries({ queryKey: QUERY_KEYS.TRAIN_WORDS })
+    qc.invalidateQueries({ queryKey: QUERY_KEYS.VOCAB_WORDS })
     setMarked(true)
   
     setLearnedCount(c => c + 1)

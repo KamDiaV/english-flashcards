@@ -1,26 +1,29 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { deleteWord as apiDeleteWord, updateWord as apiUpdateWord } from '../../api/words'
+import { QUERY_KEYS } from '../../constants/queryKeys'
+import {
+  deleteWord as apiDeleteWord,
+  updateWord as apiUpdateWord,
+} from '../../api/words'
 
-/**
- * Кастомный хук для мутаций слова: удаления и обновления.
- */
 export function useWordMutations() {
   const qc = useQueryClient()
 
-  const deleteMutation = useMutation(apiDeleteWord, {
+  const deleteMutation = useMutation({
+    mutationFn: apiDeleteWord,
     onSuccess: () => {
-      qc.invalidateQueries(['words'])
-      qc.invalidateQueries(['trainWords'])
-      qc.invalidateQueries(['vocabWords'])
-    }
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS })
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.TRAIN_WORDS })
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.VOCAB_WORDS })
+    },
   })
 
-  const updateMutation = useMutation(apiUpdateWord, {
+  const updateMutation = useMutation({
+    mutationFn: apiUpdateWord,
     onSuccess: () => {
-      qc.invalidateQueries(['words'])
-      qc.invalidateQueries(['trainWords'])
-      qc.invalidateQueries(['vocabWords'])
-    }
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS })
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.TRAIN_WORDS })
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.VOCAB_WORDS })
+    },
   })
 
   return {
@@ -29,6 +32,6 @@ export function useWordMutations() {
     isDeleting: deleteMutation.isLoading,
     isUpdating: updateMutation.isLoading,
     deleteError: deleteMutation.error,
-    updateError: updateMutation.error
+    updateError: updateMutation.error,
   }
 }

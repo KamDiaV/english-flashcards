@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { QUERY_KEYS } from '../../../constants/queryKeys'
 import { fetchMergedWords } from '../../../api/words'
 import { useProgress } from '../useProgress'
 import { useOptions } from '../../base/useOptions'
@@ -14,7 +15,6 @@ import { useWordNavigation } from '../useWordNavigation'
  *  • обработка выбора варианта (handleSelect)
  *  • обработка клика по экрану (handleScreenClick)
  */
-
 export function useTestGameLogic(words) {
   const qc = useQueryClient()
 
@@ -28,11 +28,12 @@ export function useTestGameLogic(words) {
     data: allWords = [],
     isLoading: allLoading,
     isError: allError,
-  } = useQuery(['wordsFull'],fetchMergedWords,{
-      refetchOnWindowFocus: false,
-      staleTime: 5 * 60_000,
-    }
-  )
+  } = useQuery({
+    queryKey: QUERY_KEYS.WORDS_FULL,
+    queryFn: fetchMergedWords,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60_000,
+  })
 
   const { empty, safeIndex, word, currentId, next, reset } =
     useWordNavigation(words)
@@ -62,10 +63,8 @@ export function useTestGameLogic(words) {
   }, [])
 
   const invalidateTrainAndVocab = useCallback(() => {
-    qc.invalidateQueries({
-      predicate: query =>
-        ['trainWords', 'vocabWords'].includes(query.queryKey[0]),
-    })
+    qc.invalidateQueries({ queryKey: QUERY_KEYS.TRAIN_WORDS })
+    qc.invalidateQueries({ queryKey: QUERY_KEYS.VOCAB_WORDS })
   }, [qc])
 
   const handleSelect = useCallback(

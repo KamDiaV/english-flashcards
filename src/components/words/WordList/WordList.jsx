@@ -1,18 +1,21 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { QUERY_KEYS } from '../../../constants/queryKeys'
 import { fetchMergedWords } from '../../../api/words'
 import { useWordMutations } from '../../../hooks/words/useWordMutations'
 import WordRow from '../WordRow/WordRow'
-import Spinner from '../../Spinner/Spinner'  
-import styles  from './WordList.module.scss'
+import Spinner from '../../Spinner/Spinner'
+import styles from './WordList.module.scss'
 
 export default function WordList() {
   const { deleteWord, updateWord } = useWordMutations()
-  const { data: words = [], isLoading } = useQuery(
-    ['words'],
-    fetchMergedWords,
-    { staleTime: 300_000, refetchOnWindowFocus: false }
-  )
+
+  const { data: words = [], isLoading } = useQuery({
+    queryKey: QUERY_KEYS.WORDS_FULL,
+    queryFn: fetchMergedWords,
+    staleTime: 300_000,
+    refetchOnWindowFocus: false,
+  })
 
   if (isLoading) {
     return <Spinner />

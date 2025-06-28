@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { fetchMergedWords } from '../api/words'
-import { useProgress } from './useProgress'
-import { useOptions } from './useOptions'
-import { useWordNavigation } from './useWordNavigation'
+import { fetchMergedWords } from '../../../api/words'
+import { useProgress } from '../useProgress'
+import { useOptions } from '../../base/useOptions'
+import { useWordNavigation } from '../useWordNavigation'
 
 /**
  * useTestGameLogic — хук, который инкапсулирует всю логику TestGame:

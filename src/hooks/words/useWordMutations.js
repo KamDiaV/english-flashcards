@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { deleteWord as apiDeleteWord, updateWord as apiUpdateWord } from '../api/words'
+import { deleteWord as apiDeleteWord, updateWord as apiUpdateWord } from '../../api/words'
 
 /**
  * Кастомный хук для мутаций слова: удаления и обновления.

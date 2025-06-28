@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import shuffle from '../utils/shuffle'
+import shuffle from '../../utils/shuffle'
 
 /**
  * useOptions — принимает:

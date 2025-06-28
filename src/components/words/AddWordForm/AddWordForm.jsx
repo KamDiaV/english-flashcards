@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addWord } from '../../../api/words'
-import { useForm } from '../../../hooks/useForm'
+import { useForm } from '../../../hooks/base/useForm'
 import styles from './AddWordForm.module.scss'
 
 const FIELDS = [

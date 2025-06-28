@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { fetchMergedWords }         from '../../api/words'
-import { resetProgress } from '../../hooks/useProgress'
+import { resetProgress } from '../../hooks/words/useProgress'
 import Spinner from '../../components/Spinner/Spinner'
 import styles from './VocabPage.module.scss'
 

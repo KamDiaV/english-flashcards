@@ -7,10 +7,10 @@ import { useValidation } from '../../../hooks/words/useValidation'
 import styles from './AddWordForm.module.scss'
 
 const FIELDS = {
-  english:       { label: 'Слово (англ.)',    rules: ['required', 'englishWord'] },
-  transcription: { label: 'Транскрипция',     rules: ['required', 'transcription'] },
-  russian:       { label: 'Перевод',          rules: ['required', 'russianWord'] },
-  tags:          { label: 'Тема',             rules: [] },
+  english: { label: 'Слово (англ.)', rules: ['required', 'englishWord'] },
+  transcription: { label: 'Транскрипция', rules: ['required', 'transcription'] },
+  russian: { label: 'Перевод', rules: ['required', 'russianWord'] },
+  tags: { label: 'Тема', rules: [] },
 }
 
 export default function AddWordForm() {

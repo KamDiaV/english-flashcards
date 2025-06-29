@@ -33,6 +33,15 @@
   }
 }
 
+.caption {
+  display: inline;      
+  margin-bottom: 4px;   
+}
+.asterisk {
+  color: red;
+  margin-left: 4px;
+}
+
 .button {
   padding: 10px;
   background-color: $color-yellow;

@@ -6,32 +6,32 @@ import { useForm } from '../../../hooks/base/useForm'
 import { useValidation } from '../../../hooks/words/useValidation'
 import styles from './AddWordForm.module.scss'
 
-const FIELDS = [
-  { name: 'english', label: 'Слово (англ.)', required: true },
-  { name: 'transcription', label: 'Транскрипция', required: true },
-  { name: 'russian', label: 'Перевод', required: true },
-  { name: 'tags', label: 'Тема', required: false },
-]
+const FIELDS = {
+  english:       { label: 'Слово (англ.)',    rules: ['required', 'englishWord'] },
+  transcription: { label: 'Транскрипция',     rules: ['required', 'transcription'] },
+  russian:       { label: 'Перевод',          rules: ['required', 'russianWord'] },
+  tags:          { label: 'Тема',             rules: [] },
+}
 
 export default function AddWordForm() {
   const qc = useQueryClient()
 
-  const [newWord, handleChange, resetForm] = useForm({
-    english: '', transcription: '', russian: '', tags: ''
-  })
+  const [newWord, handleChange, resetForm] = useForm(
+    Object.keys(FIELDS).reduce((acc, key) => ({ ...acc, [key]: '' }), {})
+  )
 
   const { errors, validateForm } = useValidation(FIELDS, newWord)
 
   const [success, setSuccess] = React.useState(false)
-  const [error, setError] = React.useState('')
-  const [showErrors, setShowErrors] = React.useState(false)
+  const [error,   setError]   = React.useState('')
+  const [touched, setTouched] = React.useState(false)
 
   const mutation = useMutation(addWord, {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS })
       setSuccess(true)
       resetForm()
-      setShowErrors(false)
+      setTouched(false)
     },
     onError: () => setError('Не удалось добавить слово'),
   })
@@ -43,7 +43,7 @@ export default function AddWordForm() {
 
     const isValid = validateForm()
     if (!isValid) {
-      setShowErrors(true)
+      setTouched(true)
       setError('Пожалуйста, заполните все обязательные поля')
       return
     }
@@ -53,23 +53,37 @@ export default function AddWordForm() {
 
   return (
     <form onSubmit={onSubmit} className={styles.form} noValidate>
-      {FIELDS.map(({ name, label, required }) => (
-        <label key={name} className={styles.field}>
-          {label}{!required && ' (необязательно)'}:
-          <input
-            name={name}
-            value={newWord[name]}
-            onChange={handleChange}
-            className={`${styles.input} ${showErrors && errors[name] ? styles.errorInput : ''}`}
-          />
-        </label>
-      ))}
+      {Object.entries(FIELDS).map(([name, { label, rules }]) => {
+        const isRequired = rules.includes('required')
+        const showError  = touched && errors[name]
+
+        return (
+          <label key={name} className={styles.field}>
+            <span className={styles.caption}>
+              {label}
+              {isRequired && <span className={styles.asterisk}>*</span>}:
+            </span>
+
+            <input
+              name={name}
+              value={newWord[name]}
+              onChange={handleChange}
+              className={`${styles.input} ${showError ? styles.errorInput : ''}`}
+            />
+
+            {showError && (
+              <span className={styles.errorNote}>{errors[name]}</span>
+            )}
+          </label>
+        )
+      })}
 
       <button
         type="submit"
+        disabled={mutation.isPending}
         className={`${styles.button} ${Object.keys(errors).length ? styles.buttonInactive : ''}`}
       >
-        {mutation.isLoading ? 'Добавляю…' : 'Добавить'}
+        {mutation.isPending ? 'Добавляю…' : 'Добавить'}
       </button>
 
       {success && <p className={styles.success}>✅ Добавлено!</p>}

@@ -1,25 +1,34 @@
 import { useCallback, useState } from 'react'
+import { validators } from '../../utils/validation'
 
-export function useValidation(fields, values) {
+export function useValidation(schema, values) {
   const [errors, setErrors] = useState({})
 
-  const validateField = useCallback((name, value) => {
-    if (!value.trim()) {
-      return `${name} обязательно для заполнения`
+  const validateField = useCallback((fieldName) => {
+    const { rules = [] } = schema[fieldName] || {}
+    for (const rule of rules) {
+      const validator =
+        typeof rule === 'string' ? validators[rule] :
+        typeof rule === 'function' ? rule :
+        null
+
+      if (!validator) continue
+
+      const error = validator(values[fieldName] ?? '')
+      if (error) return error
     }
     return null
-  }, [])
+  }, [schema, values])
 
   const validateForm = useCallback(() => {
-    const res = {}
-    fields.forEach(({ name, required }) => {
-      if (!required) return
-      const error = validateField(name, values[name] || '')
-      if (error) res[name] = error
+    const result = {}
+    Object.keys(schema).forEach(name => {
+      const error = validateField(name)
+      if (error) result[name] = error
     })
-    setErrors(res)
-    return Object.keys(res).length === 0
-  }, [fields, values, validateField])
+    setErrors(result)
+    return Object.keys(result).length === 0
+  }, [schema, validateField])
 
-  return { errors, validateForm }
+  return { errors, validateField, validateForm }
 }

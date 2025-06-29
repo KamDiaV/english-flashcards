@@ -8,10 +8,6 @@ import AppLayout from './components/layout/AppLayout';
 import ErrorBoundaryWrapper from './components/ErrorBoundary/ErrorBoundaryWrapper'
 import Spinner from './components/Spinner/Spinner';
 
-// временно 
-import FormattedTextDisplay from './components/FormattedTextDisplay/FormattedTextDisplay.jsx';
-// временно 
-
 const AboutPage = React.lazy(() => import('./pages/AboutPage/AboutPage'));
 const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
 const TrainPage = React.lazy(() => import('./pages/TrainPage/TrainPage'));
@@ -22,9 +18,6 @@ const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage/NotFoundPage'
 function App() {
   return (
     <AppLayout>
-      {/* временно */}
-      <FormattedTextDisplay />
-      {/* временно */}
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route path={ROUTES.ABOUT} element={<AboutPage />} />

@@ -9,7 +9,7 @@ const FIELDS = [
   { name: 'english', label: 'Слово (англ.)', required: true },
   { name: 'transcription', label: 'Транскрипция', required: true },
   { name: 'russian', label: 'Перевод', required: true },
-  { name: 'tags', label: 'Тема', required: true },
+  { name: 'tags', label: 'Тема' },
 ]
 
 export default function AddWordForm() {

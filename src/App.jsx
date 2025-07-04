@@ -9,11 +9,7 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import GenericErrorPage from './components/ErrorBoundary/GenericErrorPage';
 import Spinner from './components/Spinner/Spinner';
 
-// временно 
-import FormattedTextDisplay from './components/FormattedTextDisplay/FormattedTextDisplay.jsx';
-// временно 
-
-import { WordsProvider } from './context/WordsContext';
+import { WordsStoreContext, wordsStore } from './stores/WordsStoreContext'
 
 const AboutPage = React.lazy(() => import('./pages/AboutPage/AboutPage'));
 const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
@@ -24,11 +20,8 @@ const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage/NotFoundPage'
 
 function App() {
   return (
-    <WordsProvider>
+    <WordsStoreContext.Provider value={wordsStore}>
       <AppLayout>
-        {/* временно */}
-        <FormattedTextDisplay />
-        {/* временно */}
         <Suspense fallback={<Spinner />}>
           <Routes>
             <Route path={ROUTES.ABOUT} element={<AboutPage />} />
@@ -113,8 +106,7 @@ function App() {
           </Routes>
         </Suspense>
       </AppLayout>
-    </WordsProvider>
-    
+    </WordsStoreContext.Provider>
   );
 }
 

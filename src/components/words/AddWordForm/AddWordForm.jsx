@@ -1,61 +1,58 @@
 import React from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { addWord } from '../../../api/words'
+import { observer } from 'mobx-react-lite'
+import { useWordsStore } from '../../../stores/WordsStoreContext'
 import { useForm } from '../../../hooks/useForm'
 import styles from './AddWordForm.module.scss'
 
 const FIELDS = [
-  { name: 'english', label: 'Слово (англ.)', required: true },
-  { name: 'transcription', label: 'Транскрипция', required: true },
-  { name: 'russian', label: 'Перевод', required: true },
-  { name: 'tags', label: 'Тема', required: true },
+  { name: 'english',       label: 'Слово (англ.)', required: true },
+  { name: 'transcription', label: 'Транскрипция',  required: true },
+  { name: 'russian',       label: 'Перевод',       required: true },
+  { name: 'tags',          label: 'Тема',          required: true },
 ]
 
-export default function AddWordForm() {
-  const qc = useQueryClient()
+const AddWordForm = observer(() => {
+  const store = useWordsStore()
 
-  const [newWord, handleChange, resetForm] = useForm({ english: '', transcription: '', russian: '', tags: '' })
-  const [success, setSuccess] = React.useState(false)
-  const [error, setError] = React.useState('')
-  const [showErrors, setShowErrors] = React.useState(false)
-
-  const errors = React.useMemo(() => {
-    return FIELDS.reduce((acc, { name, required }) => {
-      if (required && !newWord[name].trim()) acc[name] = true
-      return acc
-    }, {})
-  }, [newWord])
-
-  const isFormValid = Object.keys(errors).length === 0
-
-  const mutation = useMutation(addWord, {
-    onSuccess: () => {
-      qc.invalidateQueries(['words'])
-      setSuccess(true)
-      setError('')
-      resetForm()
-      setShowErrors(false)
-    },
-    onError: () => {
-      setError('Не удалось добавить слово')
-      setSuccess(false)
-    },
+  const [word, handleChange, resetForm] = useForm({
+    english: '', transcription: '', russian: '', tags: ''
   })
 
-  const onButtonClick = () => {
-    // при попытке сохранить с ошибками — показать обводку
-    if (!isFormValid) setShowErrors(true)
-  }
+  const [showErrors, setShowErrors] = React.useState(false)
+  const [localError,   setLocalError]   = React.useState('')
+  const [localSuccess, setLocalSuccess] = React.useState(false)
 
-  const onSubmit = e => {
+  // ─── валидация ───────────────────────────────────────────
+  const errors = React.useMemo(() => (
+    FIELDS.reduce((acc, { name, required }) => {
+      if (required && !word[name].trim()) acc[name] = true
+      return acc
+    }, {})
+  ), [word])
+
+  const isFormValid = Object.keys(errors).length === 0
+  // ─────────────────────────────────────────────────────────
+
+  const onSubmit = async e => {
     e.preventDefault()
-    setSuccess(false)
-    setError('')
+    setLocalSuccess(false)
+    setLocalError('')
+
+    /* показываем обводку при пустых полях */
     if (!isFormValid) {
-      setError('Пожалуйста, заполните все обязательные поля')
+      setShowErrors(true)
+      setLocalError('Пожалуйста, заполните все обязательные поля')
       return
     }
-    mutation.mutate(newWord)
+
+    try {
+      await store.addWord(word)    // MobX-action (async flow)
+      setLocalSuccess(true)
+      resetForm()
+      setShowErrors(false)
+    } catch (err) {                // если внутри addWord бросится исключение
+      setLocalError(err?.message || 'Не удалось добавить слово')
+    }
   }
 
   return (
@@ -65,7 +62,7 @@ export default function AddWordForm() {
           {label}:
           <input
             name={name}
-            value={newWord[name]}
+            value={word[name]}
             onChange={handleChange}
             className={`${styles.input} ${showErrors && errors[name] ? styles.errorInput : ''}`}
           />
@@ -74,14 +71,18 @@ export default function AddWordForm() {
 
       <button
         type="submit"
-        onClick={onButtonClick}
+        disabled={store.loading}
         className={`${styles.button} ${!isFormValid ? styles.buttonInactive : ''}`}
       >
-        {mutation.isLoading ? 'Добавляю…' : 'Добавить'}
+        {store.loading ? 'Добавляю…' : 'Добавить'}
       </button>
 
-      {success && <p className={styles.success}>✅ Добавлено!</p>}
-      {error && <p className={styles.error}>❌ {error}</p>}
+      {localSuccess             && <p className={styles.success}>✅ Добавлено!</p>}
+      {(localError || store.error) && (
+        <p className={styles.error}>❌ {localError || store.error}</p>
+      )}
     </form>
   )
-}
+})
+
+export default AddWordForm

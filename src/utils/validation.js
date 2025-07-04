@@ -8,7 +8,7 @@ export const ERROR_MESSAGES = {
 }
 
 const PATTERNS = {
-  ENGLISH_WORD:  /^[A-Za-z\s'--]+$/,
+  ENGLISH_WORD:  /^[A-Za-z\s'-]+$/,
   TRANSCRIPTION: /^[a-zəʌɔːæ…\s]+$/i,
   RUSSIAN_WORD:  /^[А-Яа-яЁё\s-]+$/,
 }

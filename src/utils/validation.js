@@ -1,10 +1,10 @@
 export const ERROR_MESSAGES = {
-  REQUIRED      : 'Это поле обязательно для заполнения',
-  ENGLISH_WORD  : 'Используйте только английские буквы, пробелы, дефисы и апострофы',
-  TRANSCRIPTION : 'Используйте корректные символы транскрипции',
-  RUSSIAN_WORD  : 'Используйте только русские буквы, пробелы и дефисы',
-  MIN_LENGTH    : (min: number) => `Минимальная длина ${min} символов`,
-  MAX_LENGTH    : (max: number) => `Максимальная длина ${max} символов`,
+  REQUIRED     : 'Это поле обязательно для заполнения',
+  ENGLISH_WORD : 'Используйте только английские буквы, пробелы, дефисы и апострофы',
+  TRANSCRIPTION: 'Используйте корректные символы транскрипции',
+  RUSSIAN_WORD : 'Используйте только русские буквы, пробелы и дефисы',
+  MIN_LENGTH   : min => `Минимальная длина ${min} символов`,
+  MAX_LENGTH   : max => `Максимальная длина ${max} символов`,
 };
 
 const PATTERNS = {
@@ -14,34 +14,34 @@ const PATTERNS = {
 };
 
 export const validators = {
-  required: (value?: string) =>
-    value?.trim() ? null : ERROR_MESSAGES.REQUIRED,
+  required: value =>
+    value && value.trim() ? null : ERROR_MESSAGES.REQUIRED,
 
-  englishWord: (value?: string) =>
-    !value?.trim() || PATTERNS.ENGLISH_WORD.test(value)
+  englishWord: value =>
+    !value || !value.trim() || PATTERNS.ENGLISH_WORD.test(value)
       ? null
       : ERROR_MESSAGES.ENGLISH_WORD,
 
-  transcription: (value?: string) => {
-    if (!value?.trim()) return null; 
-    const pure = value.replace(/\[|\]/g, '');
+  transcription: value => {
+    if (!value || !value.trim()) return null;       
+    const pure = value.replace(/\[|\]/g, '');       
     return PATTERNS.TRANSCRIPTION.test(pure)
       ? null
       : ERROR_MESSAGES.TRANSCRIPTION;
   },
 
-  russianWord: (value?: string) =>
-    !value?.trim() || PATTERNS.RUSSIAN_WORD.test(value)
+  russianWord: value =>
+    !value || !value.trim() || PATTERNS.RUSSIAN_WORD.test(value)
       ? null
       : ERROR_MESSAGES.RUSSIAN_WORD,
 
-  minLength: (min: number) => (value?: string) =>
-    !value?.trim() || value.length >= min
+  minLength: min => value =>
+    !value || !value.trim() || value.length >= min
       ? null
       : ERROR_MESSAGES.MIN_LENGTH(min),
 
-  maxLength: (max: number) => (value?: string) =>
-    !value?.trim() || value.length <= max
+  maxLength: max => value =>
+    !value || !value.trim() || value.length <= max
       ? null
       : ERROR_MESSAGES.MAX_LENGTH(max),
 };

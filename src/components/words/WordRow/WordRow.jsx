@@ -21,7 +21,6 @@ export default function WordRow({ word, onSave, onDelete }) {
     setEdited(prev => ({ ...prev, [name]: value }));
   };
 
-  /* сохранить без alert-ов */
   const handleSave = () => {
     if (englishInvalid || transcriptionInvalid || russianInvalid) return;
     onSave(edited);
@@ -74,7 +73,6 @@ export default function WordRow({ word, onSave, onDelete }) {
             />
           </td>
           <td>
-            {/* «Тема» необязательная, без красной рамки */}
             <input
               name="tags"
               value={edited.tags || ''}

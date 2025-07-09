@@ -1,48 +1,47 @@
 export const ERROR_MESSAGES = {
-  REQUIRED: 'Это поле обязательно для заполнения',
-  ENGLISH_WORD: 'Используйте только английские буквы, пробелы, дефисы и апострофы',
-  TRANSCRIPTION: 'Используйте корректные символы транскрипции',
-  RUSSIAN_WORD: 'Используйте только русские буквы, пробелы и дефисы',
-  MIN_LENGTH: min  => `Минимальная длина ${min} символов`,
-  MAX_LENGTH: max  => `Максимальная длина ${max} символов`,
-}
+  REQUIRED      : 'Это поле обязательно для заполнения',
+  ENGLISH_WORD  : 'Используйте только английские буквы, пробелы, дефисы и апострофы',
+  TRANSCRIPTION : 'Используйте корректные символы транскрипции',
+  RUSSIAN_WORD  : 'Используйте только русские буквы, пробелы и дефисы',
+  MIN_LENGTH    : (min: number) => `Минимальная длина ${min} символов`,
+  MAX_LENGTH    : (max: number) => `Максимальная длина ${max} символов`,
+};
 
 const PATTERNS = {
-  ENGLISH_WORD:  /^[A-Za-z\s'-]+$/,
-  TRANSCRIPTION: /^[a-zəʌɔːæ…\s]+$/i,
-  RUSSIAN_WORD:  /^[А-Яа-яЁё\s-]+$/,
-}
+  ENGLISH_WORD : /^[A-Za-z\s'-]+$/,
+  TRANSCRIPTION: /^[a-zA-Z\u0250-\u02AF\u02C8\u02CC\u02D0\s'ːˈˌ]+$/,
+  RUSSIAN_WORD : /^[А-Яа-яЁё\s-]+$/,
+};
 
 export const validators = {
-  required: value => value?.trim() ? null : ERROR_MESSAGES.REQUIRED,
+  required: (value?: string) =>
+    value?.trim() ? null : ERROR_MESSAGES.REQUIRED,
 
-  englishWord: value =>
-    !value?.trim() ? null
-      : PATTERNS.ENGLISH_WORD.test(value)
+  englishWord: (value?: string) =>
+    !value?.trim() || PATTERNS.ENGLISH_WORD.test(value)
       ? null
       : ERROR_MESSAGES.ENGLISH_WORD,
 
-  transcription: value =>
-    !value?.trim() ? null
-      : PATTERNS.TRANSCRIPTION.test(value.replace(/[[\]]/g, ''))
+  transcription: (value?: string) => {
+    if (!value?.trim()) return null; 
+    const pure = value.replace(/\[|\]/g, '');
+    return PATTERNS.TRANSCRIPTION.test(pure)
       ? null
-      : ERROR_MESSAGES.TRANSCRIPTION,
+      : ERROR_MESSAGES.TRANSCRIPTION;
+  },
 
-  russianWord: value =>
-    !value?.trim() ? null
-      : PATTERNS.RUSSIAN_WORD.test(value)
+  russianWord: (value?: string) =>
+    !value?.trim() || PATTERNS.RUSSIAN_WORD.test(value)
       ? null
       : ERROR_MESSAGES.RUSSIAN_WORD,
 
-  minLength: min => value =>
-    !value?.trim() ? null
-      : value.length >= min
+  minLength: (min: number) => (value?: string) =>
+    !value?.trim() || value.length >= min
       ? null
       : ERROR_MESSAGES.MIN_LENGTH(min),
 
-  maxLength: max => value =>
-    !value?.trim() ? null
-      : value.length <= max
+  maxLength: (max: number) => (value?: string) =>
+    !value?.trim() || value.length <= max
       ? null
       : ERROR_MESSAGES.MAX_LENGTH(max),
-}
+};

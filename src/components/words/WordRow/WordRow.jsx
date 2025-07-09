@@ -1,50 +1,55 @@
-import React, { useState, useEffect } from 'react'
-import styles from './WordRow.module.scss'
+import React, { useState, useEffect } from 'react';
+import styles from './WordRow.module.scss';
 
 export default function WordRow({ word, onSave, onDelete }) {
-  const [isEditing, setIsEditing] = useState(false)
-  const [edited, setEdited]       = useState(word)
+  const [isEditing, setIsEditing] = useState(false);
+  const [edited, setEdited]       = useState(word);
 
-  const englishInvalid = isEditing && !edited.english.trim()
-  const transcriptionInvalid = isEditing && !edited.transcription.trim()
-  const russianInvalid = isEditing && !edited.russian.trim()
-  const tagsInvalid = isEditing && !edited.tags.trim()
+  const englishInvalid       = isEditing && !edited.english.trim();
+  const transcriptionInvalid = isEditing && !edited.transcription.trim();
+  const russianInvalid       = isEditing && !edited.russian.trim();
+  const tagsInvalid          = isEditing && !(edited.tags?.trim());
 
+  // при входе в режим редактирования копируем текущее слово
   useEffect(() => {
-    if (isEditing) setEdited(word)
-  }, [isEditing, word])
+    if (isEditing) setEdited(word);
+  }, [isEditing, word]);
 
+  // обновляем состояние при вводе
   const handleChange = e => {
-    const { name, value } = e.target
-    setEdited(prev => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setEdited(prev => ({ ...prev, [name]: value }));
+  };
 
+  // сохранить
   const handleSave = () => {
-    if (englishInvalid || transcriptionInvalid || russianInvalid || tagsInvalid) {
-      alert('Ошибка: заполните все поля перед сохранением')
-      return
+    if (englishInvalid || transcriptionInvalid || russianInvalid) {
+      alert('Ошибка: заполните все обязательные поля перед сохранением');
+      return;
     }
-    console.log('Сохранено слово:', edited)
-    onSave(edited)            
-    setIsEditing(false)
-  }
+    console.log('Сохранено слово:', edited);
+    onSave(edited);
+    setIsEditing(false);
+  };
 
+  // отменить
   const handleCancel = () => {
-    setIsEditing(false)
-    setEdited(word)
-  }
+    setIsEditing(false);
+    setEdited(word);
+  };
 
+  // Enter = сохранить
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
-      e.preventDefault()
-      handleSave()
+      e.preventDefault();
+      handleSave();
     }
-  }
+  };
 
   return (
     <tr className={styles.row}>
       {isEditing ? (
-        <>   
+        <>
           <td>
             <input
               name="english"
@@ -85,7 +90,7 @@ export default function WordRow({ word, onSave, onDelete }) {
             <button
               onClick={handleSave}
               className={styles.button}
-              disabled={englishInvalid || transcriptionInvalid || russianInvalid || tagsInvalid}
+              disabled={englishInvalid || transcriptionInvalid || russianInvalid}
             >
               💾
             </button>
@@ -93,7 +98,7 @@ export default function WordRow({ word, onSave, onDelete }) {
           </td>
         </>
       ) : (
-        <>  
+        <>
           <td>{word.english}</td>
           <td>{word.transcription}</td>
           <td>{word.russian}</td>
@@ -105,5 +110,5 @@ export default function WordRow({ word, onSave, onDelete }) {
         </>
       )}
     </tr>
-  )
+  );
 }

@@ -29,7 +29,7 @@ export default function AddWordForm() {
   const mutation = useMutation({
     mutationFn: addWord,
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS })
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS_FULL })
       setSuccess(true)
       resetForm()
       setTouched(false)

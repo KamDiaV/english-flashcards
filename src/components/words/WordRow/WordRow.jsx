@@ -3,42 +3,38 @@ import styles from './WordRow.module.scss';
 
 export default function WordRow({ word, onSave, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [edited, setEdited]       = useState(word);
+  const [edited,   setEdited]     = useState(word);
 
+  /* обязательные поля */
   const englishInvalid       = isEditing && !edited.english.trim();
   const transcriptionInvalid = isEditing && !edited.transcription.trim();
   const russianInvalid       = isEditing && !edited.russian.trim();
-  const tagsInvalid          = isEditing && !(edited.tags?.trim());
 
-  // при входе в режим редактирования копируем текущее слово
+  /* копируем слово при входе в режим редактирования */
   useEffect(() => {
     if (isEditing) setEdited(word);
   }, [isEditing, word]);
 
-  // обновляем состояние при вводе
+  /* изменение полей */
   const handleChange = e => {
     const { name, value } = e.target;
     setEdited(prev => ({ ...prev, [name]: value }));
   };
 
-  // сохранить
+  /* сохранить без alert-ов */
   const handleSave = () => {
-    if (englishInvalid || transcriptionInvalid || russianInvalid) {
-      alert('Ошибка: заполните все обязательные поля перед сохранением');
-      return;
-    }
-    console.log('Сохранено слово:', edited);
+    if (englishInvalid || transcriptionInvalid || russianInvalid) return;
     onSave(edited);
     setIsEditing(false);
   };
 
-  // отменить
+  /* отменить */
   const handleCancel = () => {
     setIsEditing(false);
     setEdited(word);
   };
 
-  // Enter = сохранить
+  /* Enter = сохранить (если валидно) */
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -78,12 +74,13 @@ export default function WordRow({ word, onSave, onDelete }) {
             />
           </td>
           <td>
+            {/* «Тема» необязательная, без красной рамки */}
             <input
               name="tags"
               value={edited.tags || ''}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
-              className={`${styles.input} ${tagsInvalid ? styles.errorInput : ''}`}
+              className={styles.input}
             />
           </td>
           <td className={styles.actions}>

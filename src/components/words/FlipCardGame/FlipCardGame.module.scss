@@ -8,11 +8,16 @@
 
 .cardWrapper {
   perspective: 1000px;
-  width: 600px;
-  height: 400px;      
+  width: 100%;
+  max-width: 480px;
+  height: 360px;
   margin-bottom: 16px;
   position: relative;
-  overflow: hidden;   
+  overflow: hidden; 
+  
+  @media (max-width: $mobile) {
+    height: 300px;
+  }
 }
 
 .cardMotion {
@@ -24,14 +29,14 @@
 }
 
 .learnedCounter {
-  font-size: 18px;
+  font-size: clamp(16px, 4vw, 18px);
   margin-bottom: 16px;
   color: $color-dark;
 }
 
 .checkButton {
   padding: 8px 16px;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   background: $color-lavender;
   color: $color-dark;
   border: none;
@@ -66,7 +71,7 @@
 
   button {
     padding: 8px 12px;
-    font-size: 18px;
+    font-size: clamp(16px, 4vw, 18px);
     border: none;
     border-radius: $radius;
     background: $color-lavender;

@@ -2,10 +2,14 @@
 
 .cardWrapper {
   perspective: 1000px;
-  width: 600px;
-  height: 380px;
+  width: 100%;
+  max-width: 480px;
+  height: 340px;
   margin-bottom: 0; 
   cursor: pointer;
+  @media (max-width: $mobile) {
+    height: 280px;
+  }
 }
 
 
@@ -61,7 +65,7 @@
 }
 
 .english {
-  font-size: 24px;
+  font-size: clamp(20px, 6vw, 24px);
   font-weight: bold;
 }
 
@@ -69,9 +73,13 @@
   margin-top: 8px;
   font-style: italic;
   color: $color-dark;
+
+  @media (max-width: $mobile) {
+    font-size: 14px;
+  }
 }
 
 .translation {
-  font-size: 20px;
+  font-size: clamp(18px, 5vw, 20px);
   font-weight: 500;
 }

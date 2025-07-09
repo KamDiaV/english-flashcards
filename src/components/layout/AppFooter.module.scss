@@ -4,6 +4,10 @@
   background-color: $color-accent;
   padding: 12px 0;
   text-align: center;
+
+  @media (max-width: $mobile) {
+    padding: 8px 0;
+  }
 }
 
 .text {

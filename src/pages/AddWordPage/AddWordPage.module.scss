@@ -8,12 +8,13 @@
 .title {
   text-align: center;
   font-family: $font-main;
-  font-size: 28px;
+  font-size: clamp(24px, 6vw, 28px);
   color: $color-dark;
   margin: 32px 0;
 }
 
 .formWrapper {
+  width: 100%;
   max-width: 500px;
   margin: 0 auto;
 }

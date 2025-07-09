@@ -26,7 +26,8 @@ export default function AddWordForm() {
   const [error,   setError]   = React.useState('')
   const [touched, setTouched] = React.useState(false)
 
-  const mutation = useMutation(addWord, {
+  const mutation = useMutation({
+    mutationFn: addWord,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS })
       setSuccess(true)

@@ -1,4 +1,4 @@
-// Цвета
+// Colors
 $color-dark: #110651;
 $color-accent: #5827DD;
 $color-yellow: #F3DA31;
@@ -9,10 +9,15 @@ $color-danger: #FF4D4D;
 $color-success: #47cc8a;
 $color-lightGray: #D8D8D8;
 
-// Шрифты
+// Fonts
 $font-main: 'Montserrat', sans-serif;
 
-// Размеры
+// Sizes
 $font-size-base: 16px;
 $radius: 8px;
 $transition: 0.2s ease-in-out;
+
+//Breakpoints
+$mobile: 600px;
+$tablets: 900px;
+

@@ -27,15 +27,13 @@ async function fetchTrainWords() {
 export default function TrainPage() {
   const [mode, setMode] = useState(null)
 
-  const { data: trainWords = [], isLoading, isError } = useQuery(
-    ['trainWords', mode],
-    fetchTrainWords,
-    {
-      enabled: Boolean(mode),
-      refetchOnWindowFocus: false,
-      staleTime: 5 * 60_000,
-    }
-  )
+  const { data: trainWords = [], isLoading, isError } = useQuery({
+    queryKey: ['trainWords', mode],
+    queryFn: fetchTrainWords,
+    enabled: Boolean(mode),
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60_000,
+  })
 
   if (mode === null) {
     return (

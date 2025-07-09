@@ -6,13 +6,13 @@
 }
 
 .status {
-  padding: 24px;
+  padding: clamp(16px, 4vw, 18px);
   font-family: $font-main;
   text-align: center;
 }
 
 .title {
-  font-size: 24px;
+  font-size: clamp(20px, 5vw, 24px);
   margin-bottom: 16px;
   color: $color-dark;
   font-family: $font-main;
@@ -36,6 +36,14 @@
 
   tr:nth-child(even) {
     background-color: $color-light;
+  }
+}
+
+@media (max-width: $mobile) {
+  .table th,
+  .table td {
+    padding: 8px;
+    font-size: 14px;
   }
 }
 

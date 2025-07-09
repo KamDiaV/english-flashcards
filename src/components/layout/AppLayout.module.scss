@@ -6,6 +6,10 @@
   min-height: 100vh;
   background-color: $color-white; 
   padding-top: 64px;
+
+  @media (max-width: $mobile) {
+    padding-top: 56px;
+  }
 }
 
 .main {

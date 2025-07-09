@@ -33,7 +33,7 @@
 .title {
   align-self: center;
   font-family: $font-main;
-  font-size: 28px;
+  font-size: clamp(24px, 6vw, 28px);
   color: $color-dark;
   margin-bottom: 32px;
   margin-top: 32px;
@@ -47,10 +47,11 @@
 }
 
 .largeButton {
-  width: 240px;
+  width: 100%;
+  max-width: 240px;
   padding: 12px 0;
   font-family: $font-main;
-  font-size: 18px;
+  font-size: clamp(16px, 5vw, 18px);
   font-weight: 600;
   background-color: $color-yellow;
   color: $color-dark;
@@ -67,7 +68,7 @@
 
 .status {
   font-family: $font-main;
-  font-size: 20px;
+  font-size: clamp(18px, 5vw, 20px);
   color: $color-dark;
   text-align: center;
   margin: 32px 0;

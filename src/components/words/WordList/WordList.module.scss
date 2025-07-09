@@ -1,22 +1,23 @@
 @use '../../../styles/variables.scss' as *;
 
+/* ====== Base table ====== */
 .table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;         
+  table-layout: fixed;
   font-family: $font-main;
   font-size: $font-size-base;
   margin-top: 20px;
 }
 
 .table tbody tr {
-  height: 56px;               
+  height: 56px;
 }
 
 th,
 td {
   padding: 12px 16px;
-  border: 1px solid $color-lavender;
+  border-right: 1px solid $color-lavender;
   vertical-align: middle;
   text-align: left;
   overflow: hidden;
@@ -30,12 +31,44 @@ th {
   font-weight: 600;
 }
 
-th:nth-child(1), td:nth-child(1) { width: 20%; }
-th:nth-child(2), td:nth-child(2) { width: 20%; }
-th:nth-child(3), td:nth-child(3) { width: 30%; }
-th:nth-child(4), td:nth-child(4) { width: 20%; }
-th:nth-child(5), td:nth-child(5) {
+/* ------- Column widths (десктоп) ------- */
+th:nth-child(1),
+td:nth-child(1) { width: 20%; }
+
+th:nth-child(3),
+td:nth-child(3) { width: 30%; }
+
+th:nth-child(5),
+td:nth-child(5) {
   width: auto;
   min-width: 120px;
-  white-space: nowrap;
+  border: none;
+}
+
+/* ====== Mobile ====== */
+@media (max-width: $mobile) {
+  /* компактнее шрифт и отступы */
+  .table th,
+  .table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  /* полностью скрываем 2-ю и 4-ю колонки */
+  th:nth-child(2),
+  td:nth-child(2),
+  th:nth-child(4),
+  td:nth-child(4) {
+    display: none;
+  }
+
+  /* оставшиеся колонки заполняют ширину */
+  th:nth-child(1),
+  td:nth-child(1),
+  th:nth-child(3),
+  td:nth-child(3),
+  th:nth-child(5),
+  td:nth-child(5) {
+    width: auto;
+  }
 }

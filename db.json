@@ -1,0 +1,27 @@
+{
+  "words": [
+    {"id":"33409","english":"murky","transcription":"[mɜːki]","russian":"мрачный","tags":"","tags_json":"[\"\"]"},
+    {"id":"33410","english":"red","transcription":"[rɛd]","russian":"красный","tags":"Colors","tags_json":"[\"Colors\"]"},
+    {"id":"33412","english":"dad","transcription":"[dæd]","russian":"отец","tags":"Family","tags_json":"[\"Family\"]"},
+    {"id":"33413","english":"yellow","transcription":"[jɛləʊ]","russian":"желтый","tags":"Colors","tags_json":"[\"Colors\"]"},
+    {"id":"33414","english":"pan","transcription":"[pæn]","russian":"сковорода","tags":"Kitchen","tags_json":"[\"Kitchen\"]"},
+    {"id":"33420","english":"flor","transcription":"[flɔː]","russian":"пол","tags":"Flat","tags_json":"[\"Flat\"]"},
+    {"id":"33421","english":"step","transcription":"[step]","russian":"шаг","tags":"Action","tags_json":"[\"Action\"]"},
+    {"id":"33463","english":"more","transcription":"[mɔːr]","russian":"больше","tags":"","tags_json":"[\"\"]"},
+    {"id":"33472","english":"forecast","transcription":"[ˈfɔːrkæst]","russian":"форекаст","tags":"","tags_json":"[]"},
+    {"id":"33473","english":"mosquito","transcription":"[məˈskiː.təʊ]","russian":"комар","tags":"","tags_json":"[]"},
+    {"id":"33474","english":"pan","transcription":"[pæn]","russian":"сковорода","tags":"","tags_json":"[]"},
+    {"id":"33475","english":"mother","transcription":"[mʌðə]","russian":"мама","tags":"","tags_json":"[\"\"]"},
+    {"id":"33477","english":"apple","transcription":"[ˈæpl]","russian":"яблоко","tags":"","tags_json":"[\"\"]"},
+    {"id":"33478","english":"environment","transcription":"[ɪnˈvaɪrənmənt]","russian":"окружающая среда","tags":"","tags_json":"[\"\"]"},
+    {"id":"33479","english":"development","transcription":"[dɪˈveləpmənt]","russian":"развитие","tags":"","tags_json":"[\"\"]"},
+    {"id":"33480","english":"knowledge","transcription":"[ˈnɒlɪdʒ]","russian":"знание","tags":"Education","tags_json":"[\"Education\"]"},
+    {"id":"33481","english":"language","transcription":"[ˈlæŋɡwɪdʒ]","russian":"язык","tags":"","tags_json":"[\"\"]"},
+    {"id":"33482","english":"education","transcription":"[ˌedʒuˈkeɪʃn]","russian":"образование","tags":"","tags_json":"[\"\"]"},
+    {"id":"33483","english":"community","transcription":"[kəˈmjuːnəti]","russian":"сообщество","tags":"","tags_json":"[\"\"]"},
+    {"id":"33484","english":"technology","transcription":"[tekˈnɒlədʒi]","russian":"технология","tags":"","tags_json":"[\"\"]"},
+    {"id":"33485","english":"smart ","transcription":"[smɑːrt]","russian":"общая интеллектуальность","tags":"Education","tags_json":"[\"Education\"]"},
+    {"id":"33486","english":"community","transcription":"[kəˈmjuːnəti]","russian":"сообщество","tags":"","tags_json":"[]"}
+  ]
+}
+

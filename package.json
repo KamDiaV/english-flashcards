@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "json-server --watch db.json --port 3000 --host 0.0.0.0",
+    "server": "json-server --watch /data/db.json --port 3000 --host 0.0.0.0",
     "dev": "concurrently \"npm run server\" \"npm start\"",
     "build": "react-scripts build",
     "predeploy": "npm run build",

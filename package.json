@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "server": "json-server --watch db.json --port 3000 --host 0.0.0.0",
+    "dev": "concurrently \"npm run server\" \"npm start\"",
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -29,10 +31,14 @@
     "react-router-dom": "^7.5.3",
     "react-scripts": "^5.0.1",
     "sass": "^1.87.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "json-server": "^1.0.0-beta.3"
   },
   "devDependencies": {
     "gh-pages": "^6.3.0"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "eslintConfig": {
     "extends": [

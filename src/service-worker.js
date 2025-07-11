@@ -3,7 +3,7 @@
 import { clientsClaim } from 'workbox-core';
 import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { NetworkFirst } from 'workbox-strategies';
+import { StaleWhileRevalidate } from 'workbox-strategies';
 
 clientsClaim();
 cleanupOutdatedCaches();

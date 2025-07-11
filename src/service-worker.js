@@ -11,7 +11,7 @@ cleanupOutdatedCaches();
 precacheAndRoute(self.__WB_MANIFEST || []);
 
 registerRoute(
-  ({ url }) => url.pathname.startsWith('/words'),
+  ({ url }) => url.pathname.includes('/words'),
   new StaleWhileRevalidate({ cacheName: 'api-words' })
 );
 

@@ -1,0 +1,26 @@
+# fly.toml app configuration file generated for flashcards-api-snowy-mountain-4760 on 2025-07-11T15:01:33+05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'flashcards-api-snowy-mountain-4760'
+primary_region = 'fra'
+
+[build]
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[mounts]]
+  source = "data"
+  destination = "/app"
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

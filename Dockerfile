@@ -1,19 +1,19 @@
 FROM node:20-alpine
 WORKDIR /app
 
-# 1️⃣ Ставим прод-зависимости
+# 1️⃣ Устанавливаем прод-зависимости
 COPY package*.json ./
 RUN npm ci --omit=dev
 
-# 2️⃣ Создаём точку монтирования и кладём дефолтный db.json внутрь образа
+# 2️⃣ Каталог для тома + дефолтная база
 RUN mkdir -p /data
-COPY db.json /app/db.json      
+COPY db.json /app/db.json
 
-# 3️⃣ Экспонируем порт
+# 3️⃣ Открываем порт
 EXPOSE 3000
 
-# 4️⃣ Стартовый скрипт:
-#    • если /data/db.json отсутствует (том пустой) — копируем исходник
-#    • запускаем json-server, отслеживая файл на томе
+# 4️⃣ Старт:
+#    • если в /data ещё нет db.json → копируем дефолт
+#    • запускаем json-server через npx
 CMD sh -c 'test -f /data/db.json || cp /app/db.json /data/db.json && \
-          json-server --watch /data/db.json --port 3000 --host 0.0.0.0'
+          npx json-server --watch /data/db.json --port 3000 --host 0.0.0.0'

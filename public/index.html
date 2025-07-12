@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-    <!-- Тема для адресной строки / карточек приложений -->
-    <meta name="theme-color" content="#110651" />
-  
-    <!-- Описание страницы -->
-    <meta name="description"
-          content="English Word Cards — React-приложение для изучения английских слов по карточкам" />
-  
-    <!-- Шрифты -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
-          rel="stylesheet" />
-  
-    <!-- Favicon -->
-    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" type="image/png" sizes="32x32"
-          href="%PUBLIC_URL%/icons/icon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16"
-          href="%PUBLIC_URL%/icons/icon-16.png" />
-  
-    <!-- PWA манифест -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  
-    <!-- iOS значок -->
-    <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/icons/icon-180.png">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  
-    <title>English Word Cards</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+  <!-- Цвет адресной строки / заголовка окна -->
+  <meta name="theme-color" content="#110651" />
+
+  <!-- iOS: запуск как standalone-app -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <!-- Описание -->
+  <meta name="description"
+        content="English Word Cards — React-приложение для изучения английских слов по карточкам" />
+
+  <!-- Шрифт -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+
+  <!-- Favicon (SVG достаточно большинству браузеров) -->
+  <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml" />
+
+  <!-- iOS ярлык (180 × 180 px) -->
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/icons/icon-180.png" />
+
+  <!-- PWA-манифест -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <title>English Word Cards</title>
+</head>
+<body>
+  <div id="root"></div>
+</body>
 </html>

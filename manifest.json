@@ -4,16 +4,10 @@
   "description": "Учите английские слова офлайн и онлайн",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#1e90ff",
+  "theme_color": "#110651",
   "background_color": "#ffffff",
 
   "icons": [
-    {
-      "src": "icons/icon-72.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
     {
       "src": "icons/icon-96.png",
       "sizes": "512x512",

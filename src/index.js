@@ -21,10 +21,7 @@ root.render(
   </React.StrictMode>
 );
 
-
-// Регистрируем сервис-воркер CRA
 serviceWorkerRegistration.register({
-  // опционально: уведомляем пользователя о новой версии
   onUpdate: reg => {
     if (window.confirm('Доступна новая версия приложения. Обновить?')) {
       reg.waiting?.postMessage({ type: 'SKIP_WAITING' });

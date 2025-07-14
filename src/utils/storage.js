@@ -1,6 +1,3 @@
-/**
- * Утилиты для работы с localStorage
- */
 export function getFromStorage(key) {
   try {
     return JSON.parse(localStorage.getItem(key)) || [];

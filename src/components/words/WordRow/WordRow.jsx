@@ -5,17 +5,14 @@ export default function WordRow({ word, onSave, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [edited,   setEdited]     = useState(word);
 
-  /* обязательные поля */
   const englishInvalid       = isEditing && !edited.english.trim();
   const transcriptionInvalid = isEditing && !edited.transcription.trim();
   const russianInvalid       = isEditing && !edited.russian.trim();
 
-  /* копируем слово при входе в режим редактирования */
   useEffect(() => {
     if (isEditing) setEdited(word);
   }, [isEditing, word]);
 
-  /* изменение полей */
   const handleChange = e => {
     const { name, value } = e.target;
     setEdited(prev => ({ ...prev, [name]: value }));
@@ -27,13 +24,11 @@ export default function WordRow({ word, onSave, onDelete }) {
     setIsEditing(false);
   };
 
-  /* отменить */
   const handleCancel = () => {
     setIsEditing(false);
     setEdited(word);
   };
 
-  /* Enter = сохранить (если валидно) */
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
       e.preventDefault();

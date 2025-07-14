@@ -6,13 +6,6 @@ import FlipCardGame        from '../../components/words/FlipCardGame/FlipCardGam
 import TestGame            from '../../components/words/TestGame/TestGame'
 import styles              from './TrainPage.module.scss'
 
-/**
- * Берём все слова (API + локалка),
- * отфильтровываем:
- *  — изученные (knownByUser)
- *  — удалённые (deletedWords)
- */
-
 async function fetchTrainWords() {
   const all     = await fetchMergedWords()
   const prog    = JSON.parse(localStorage.getItem('vocabProgress') || '{}')

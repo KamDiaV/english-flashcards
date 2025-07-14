@@ -14,7 +14,6 @@ export default function GenericErrorPage({
       <h1 className={styles.title}>{title}</h1>
       <p className={styles.message}>{message}</p>
 
-      {/* Если пришёл стек ошибок — показываем детали */}
       {errorInfo?.componentStack && (
         <details className={styles.details}>
           <summary>Показать технические детали</summary>

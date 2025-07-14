@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { QUERY_KEYS } from '../../../constants/queryKeys'
 import { fetchMergedWords } from '../../../api/words'
 import { useProgress } from '../useProgress'
-import { useOptions } from '../../base/useOptions'
+import { useOptions } from './useOptions'
 import { useWordNavigation } from '../useWordNavigation'
 
 /**

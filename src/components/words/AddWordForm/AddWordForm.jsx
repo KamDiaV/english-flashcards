@@ -1,68 +1,87 @@
-import React from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { addWord } from '../../../api/words'
-import { QUERY_KEYS } from '../../../constants/queryKeys'
-import { useForm } from '../../../hooks/base/useForm'
-import { useValidation } from '../../../hooks/words/useValidation'
-import styles from './AddWordForm.module.scss'
+import React, { useState } from 'react';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { addWord } from '../../../api/words';
+import { QUERY_KEYS } from '../../../constants/queryKeys';
+import { useForm } from '../../../hooks/base/useForm';
+import { useValidation } from '../../../hooks/words/useValidation';
+import styles from './AddWordForm.module.scss';
 
 const FIELDS = {
-  english: { label: 'Слово (англ.)', rules: ['required', 'englishWord'] },
-  transcription: { label: 'Транскрипция', rules: ['required', 'transcription'] },
-  russian: { label: 'Перевод', rules: ['required', 'russianWord'] },
-  tags: { label: 'Тема', rules: [] },
-}
+  english:       { label: 'Слово (англ.)', rules: ['required', 'englishWord'] },
+  transcription: { label: 'Транскрипция',  rules: ['required', 'transcription'] },
+  russian:       { label: 'Перевод',       rules: ['required', 'russianWord'] },
+  tags:          { label: 'Тема',          rules: [] },
+};
 
 export default function AddWordForm() {
-  const qc = useQueryClient()
+  const qc = useQueryClient();
 
   const [newWord, handleChange, resetForm] = useForm(
-    Object.keys(FIELDS).reduce((acc, key) => ({ ...acc, [key]: '' }), {})
-  )
+    Object.keys(FIELDS).reduce((a, k) => ({ ...a, [k]: '' }), {})
+  );
+  const { errors, validateForm } = useValidation(FIELDS, newWord);
 
-  const { errors, validateForm } = useValidation(FIELDS, newWord)
-
-  const [success, setSuccess] = React.useState(false)
-  const [error,   setError]   = React.useState('')
-  const [touched, setTouched] = React.useState(false)
+  const [success, setSuccess] = useState(false);
+  const [error,   setError]   = useState('');
+  const [touched, setTouched] = useState(false);
 
   const mutation = useMutation({
     mutationFn: addWord,
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS_FULL })
-      setSuccess(true)
-      resetForm()
-      setTouched(false)
+
+    onMutate: async (word) => {
+      await qc.cancelQueries({ queryKey: QUERY_KEYS.WORDS_FULL });
+
+      const prev = qc.getQueryData(QUERY_KEYS.WORDS_FULL) ?? [];
+      const temp = { ...word, id: Date.now(), __temp: true };
+      qc.setQueryData(QUERY_KEYS.WORDS_FULL, [...prev, temp]);
+
+      return { prev, tempId: temp.id };
     },
-    onError: () => setError('Не удалось добавить слово'),
-  })
 
-  const onSubmit = e => {
-    e.preventDefault()
-    setSuccess(false)
-    setError('')
+    onError: (_err, _word, ctx) => {
+      ctx?.prev && qc.setQueryData(QUERY_KEYS.WORDS_FULL, ctx.prev);
+      setError('Не удалось добавить слово');
+    },
 
-    const isValid = validateForm()
-    if (!isValid) {
-      setTouched(true)
-      setError('Пожалуйста, заполните все обязательные поля')
-      return
+    onSuccess: (_saved, _word, ctx) => {
+      qc.setQueryData(QUERY_KEYS.WORDS_FULL, (old = []) =>
+        old.filter(w => w.id !== ctx?.tempId)
+      );
+      setSuccess(true);
+      resetForm();
+      setTouched(false);
+    },
+
+    onSettled: () => {
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.WORDS_FULL });
+    },
+  });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setSuccess(false);
+    setError('');
+
+    if (!validateForm()) {
+      setTouched(true);
+      setError('Пожалуйста, заполните все обязательные поля');
+      return;
     }
 
-    mutation.mutate(newWord)
-  }
+    mutation.mutate(newWord);
+  };
 
   return (
     <form onSubmit={onSubmit} className={styles.form} noValidate>
       {Object.entries(FIELDS).map(([name, { label, rules }]) => {
-        const isRequired = rules.includes('required')
-        const showError  = touched && errors[name]
+        const required  = rules.includes('required');
+        const showError = touched && errors[name];
 
         return (
           <label key={name} className={styles.field}>
             <span className={styles.caption}>
               {label}
-              {isRequired && <span className={styles.asterisk}>*</span>}:
+              {required && <span className={styles.asterisk}>*</span>}:
             </span>
 
             <input
@@ -72,17 +91,17 @@ export default function AddWordForm() {
               className={`${styles.input} ${showError ? styles.errorInput : ''}`}
             />
 
-            {showError && (
-              <span className={styles.errorNote}>{errors[name]}</span>
-            )}
+            {showError && <span className={styles.errorNote}>{errors[name]}</span>}
           </label>
-        )
+        );
       })}
 
       <button
         type="submit"
         disabled={mutation.isPending}
-        className={`${styles.button} ${Object.keys(errors).length ? styles.buttonInactive : ''}`}
+        className={`${styles.button} ${
+          Object.keys(errors).length ? styles.buttonInactive : ''
+        }`}
       >
         {mutation.isPending ? 'Добавляю…' : 'Добавить'}
       </button>
@@ -90,5 +109,5 @@ export default function AddWordForm() {
       {success && <p className={styles.success}>✅ Добавлено!</p>}
       {error   && <p className={styles.error}>❌ {error}</p>}
     </form>
-  )
+  );
 }

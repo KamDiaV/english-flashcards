@@ -1,91 +1,84 @@
-import axios from 'axios'
-import { getFromStorage, setToStorage } from '../utils/storage'
+import axios from 'axios';
+import { getFromStorage, setToStorage } from '../utils/storage';
 
-const API_URL = process.env.REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_URL;
 
-export const STORAGE_KEY_ADDED   = 'addedWords'
-export const STORAGE_KEY_DELETED = 'deletedWords'
+export const STORAGE_KEY_ADDED   = 'addedWords';
+export const STORAGE_KEY_DELETED = 'deletedWords';
 
-export function fetchWordsFromServer() {
-  return axios.get(`${API_URL}/words`).then(res => res.data)
-}
-export function addWordOnServer(word) {
-  return axios.post(`${API_URL}/words`, word).then(res => res.data)
-}
-export function updateWordOnServer(word) {
-  return axios.put(`${API_URL}/words/${word.id}`, word).then(res => res.data)
-}
-export function deleteWordOnServer(id) {
-  return axios.delete(`${API_URL}/words/${id}`)
-}
+export const fetchWordsFromServer  = () =>
+  axios.get(`${API_URL}/words`).then(r => r.data);
 
-/**
- * Обёртка: POST + локальное сохранение
- */
+export const addWordOnServer       = (word) =>
+  axios.post(`${API_URL}/words`, word).then(r => r.data);
+
+export const updateWordOnServer    = (word) =>
+  axios.put(`${API_URL}/words/${word.id}`, word).then(r => r.data);
+
+export const deleteWordOnServer    = (id) =>
+  axios.delete(`${API_URL}/words/${id}`);
+
+/* ────────────── ADD (он-/офлайн) ────────────── */
 export async function addWord(word) {
-  const data = await addWordOnServer(word)
-  const id   = typeof data.id === 'number' ? data.id : `local-${Date.now()}`
-  const entry = { id, ...word }
+  try {
+    const data = await addWordOnServer(word);       
 
-  const added = getFromStorage(STORAGE_KEY_ADDED)
-  setToStorage(STORAGE_KEY_ADDED, [...added, entry])
+    if (data?.id != null) {
+      const withoutDup = getFromStorage(STORAGE_KEY_ADDED)
+        .filter(w => String(w.english).toLowerCase() !== word.english.toLowerCase());
+      setToStorage(STORAGE_KEY_ADDED, withoutDup);
+      return data;         
+    }
+  } catch (_) {
+  }
 
-  return entry
+  const entry  = { id: `local-${Date.now()}`, ...word };
+  const added  = getFromStorage(STORAGE_KEY_ADDED);
+  setToStorage(STORAGE_KEY_ADDED, [...added, entry]);
+  return entry;
 }
 
-/**
- * Обёртка: PUT + локальная синхронизация
- */
+/* ────────────── UPDATE ────────────── */
 export async function updateWord(word) {
-  const data = await updateWordOnServer(word)
-  const id   = typeof data.id === 'number' ? data.id : word.id
-  const entry = { id, ...word }
+  const data  = await updateWordOnServer(word);
+  const id    = typeof data.id === 'number' ? data.id : word.id;
+  const entry = { id, ...word };
 
-  const added = getFromStorage(STORAGE_KEY_ADDED)
-    .filter(w => String(w.id) !== String(id))
-  setToStorage(STORAGE_KEY_ADDED, [...added, entry])
-
-  return entry
+  const merged = getFromStorage(STORAGE_KEY_ADDED)
+    .filter(w => String(w.id) !== String(id));
+  setToStorage(STORAGE_KEY_ADDED, [...merged, entry]);
+  return entry;
 }
 
-/**
- * Обёртка: DELETE + учёт удалённых
- */
+/* ────────────── DELETE ────────────── */
 export async function deleteWord(id) {
   if (!String(id).startsWith('local-')) {
-    await deleteWordOnServer(id)
+    await deleteWordOnServer(id);
   }
 
-  const added = getFromStorage(STORAGE_KEY_ADDED)
-    .filter(w => String(w.id) !== String(id))
-  setToStorage(STORAGE_KEY_ADDED, added)
+  const kept   = getFromStorage(STORAGE_KEY_ADDED)
+    .filter(w => String(w.id) !== String(id));
+  setToStorage(STORAGE_KEY_ADDED, kept);
 
-  const deleted = getFromStorage(STORAGE_KEY_DELETED)
+  const deleted = getFromStorage(STORAGE_KEY_DELETED);
   if (!deleted.includes(String(id))) {
-    setToStorage(STORAGE_KEY_DELETED, [...deleted, String(id)])
+    setToStorage(STORAGE_KEY_DELETED, [...deleted, String(id)]);
   }
-
-  return id
+  return id;
 }
 
-/**
- * Получить «слитые» слова:
- * — серверные без удалённых
- * — заменённые локальными
- * — добавленные локально
- */
+/* ────────────── MERGED LIST ────────────── */
 export async function fetchMergedWords() {
-  const serverWords = await fetchWordsFromServer()
-  const deleted     = getFromStorage(STORAGE_KEY_DELETED)
-  const added       = getFromStorage(STORAGE_KEY_ADDED)
+  const server = await fetchWordsFromServer();
+  const deleted = getFromStorage(STORAGE_KEY_DELETED);
+  const added   = getFromStorage(STORAGE_KEY_ADDED);
 
-  const filtered = serverWords.filter(w => !deleted.includes(String(w.id)))
+  const filtered = server.filter(w => !deleted.includes(String(w.id)));
   const merged   = filtered.map(w =>
     added.find(a => String(a.id) === String(w.id)) || w
-  )
-  const extras   = added.filter(a =>
+  );
+  const extras = added.filter(a =>
     !filtered.find(w => String(w.id) === String(a.id))
-  )
-
-  return [...merged, ...extras]
+  );
+  return [...merged, ...extras];
 }

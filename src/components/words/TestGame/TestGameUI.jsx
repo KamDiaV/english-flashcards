@@ -1,6 +1,6 @@
-import React from 'react'
-import Spinner from '../../Spinner/Spinner'
-import styles from './TestGame.module.scss'
+import React from 'react';
+import Spinner from '../../Spinner/Spinner';
+import styles from './TestGame.module.scss';
 
 export function TestGameUI(props) {
   const {
@@ -24,31 +24,25 @@ export function TestGameUI(props) {
     safeIndex,
     wordsLength,
     handleClearSelection,
-  } = props
+  } = props;
 
-  if (isLoading) {
-    return <Spinner />
-  }
-  if (isError) {
-    return <p className={styles.status}>Ошибка загрузки вариантов</p>
-  }
-  if (empty || (props.knownByUser && !celebrating)) {
-    return <Spinner />
-  }
+  /* ---------- состояния загрузки ---------- */
+  if (isLoading) return <Spinner />;
+  if (isError)   return <p className={styles.status}>Ошибка загрузки вариантов</p>;
+  if (empty || (props.knownByUser && !celebrating)) return <Spinner />;
 
+  /* ---------- основной рендер ---------- */
   return (
-    <div className={styles.container} onClick={handleScreenClick}>
+    <div className={styles.container} onClick={(e) => handleScreenClick(e)}>
       <div className={styles.toggle}>
         <button
           className={direction === 'en-ru' ? styles.active : ''}
-          onClick={() => setDirection('en-ru')}
-        >
+          onClick={() => setDirection('en-ru')}>
           Англ → Рус
         </button>
         <button
           className={direction === 'ru-en' ? styles.active : ''}
-          onClick={() => setDirection('ru-en')}
-        >
+          onClick={() => setDirection('ru-en')}>
           Рус → Англ
         </button>
       </div>
@@ -62,14 +56,15 @@ export function TestGameUI(props) {
         <span>{displayCount}/5</span>
       </div>
 
+      {/* ---------- кнопки вариантов ---------- */}
       <div className={styles.options}>
-        {options.map(opt => (
+        {options.map((opt, idx) => (
           <button
-            key={opt}
-            disabled={selected !== null || celebrating}
+            key={`${opt}-${idx}`}                       
+            disabled={selected !== null || celebrating} 
             onClick={e => {
-              e.stopPropagation()
-              handleSelect(opt)
+              e.stopPropagation();
+              handleSelect(opt);
             }}
             className={
               selected === null
@@ -79,19 +74,20 @@ export function TestGameUI(props) {
                 : opt === selected
                 ? styles.wrong
                 : ''
-            }
-          >
+            }>
             {opt}
           </button>
         ))}
       </div>
 
+      {/* ---------- фейерверк ---------- */}
       {celebrating && (
         <div className={styles.celebration}>
           🎉🎆 Отлично! Слово выучено! 🎆🎉
         </div>
       )}
 
+      {/* ---------- футер с навигацией ---------- */}
       {!celebrating && selected !== null && (
         <div className={styles.footer}>
           <p className={isCorrect ? styles.ok : styles.err}>
@@ -104,28 +100,26 @@ export function TestGameUI(props) {
 
           <button
             onClick={() => {
-              handleClearSelection()
-              next()
+              handleClearSelection();
+              next();
             }}
             disabled={safeIndex === wordsLength - 1}
-            className={styles.nextButton}
-          >
+            className={styles.nextButton}>
             Следующее →
           </button>
 
           {safeIndex === wordsLength - 1 && (
-            <button 
+            <button
               onClick={() => {
-                handleClearSelection()
-                reset()
+                handleClearSelection();
+                reset();
               }}
-              className={styles.resetButton}
-            >
+              className={styles.resetButton}>
               Начать сначала
             </button>
           )}
         </div>
       )}
     </div>
-  )
+  );
 }

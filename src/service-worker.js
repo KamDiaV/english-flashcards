@@ -59,7 +59,7 @@ registerRoute(
 // 5. SPA-фолбэк: все навигационные запросы → index.html
 registerRoute(
   ({ request }) => request.mode === 'navigate',
-  createHandlerBoundToURL('/build/index.html')
+  createHandlerBoundToURL('/english-flashcards/index.html')
 );
 
 self.addEventListener('message', (event) => {
